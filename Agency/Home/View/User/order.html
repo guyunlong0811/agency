@@ -1,0 +1,149 @@
+<include file="Public/header"/>
+
+<include file="Public/sidebar"/>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#uid").val('<{$v.get.uid}>');
+        $("#price").val('0.00');
+        $("#cost").val('0.00');
+        $("#count").val(1);
+
+        $("#price").blur(function(){
+            if(!($("#price").val() > 0)){
+                $("#price").val('0.00');
+            }
+        });
+
+        $("#cost").blur(function(){
+            if(!($("#cost").val() > 0)){
+                $("#cost").val('0.00');
+            }
+        });
+
+        $("#count").blur(function(){
+            if(!($("#count").val() > 0)){
+                $("#count").val(1);
+            }
+        });
+
+        $("#mainform").submit(function () {
+            if( $("#price").val() == '0.00'){
+                alert('<{$Think.lang.product_price_input}>');
+                return false;
+            }else if( $("#cost").val() == '0.00'){
+                alert('<{$Think.lang.product_cost_input}>');
+                return false;
+            }else if( $("#product").val() == ''){
+                alert('<{$Think.lang.product_info_input}>');
+                return false;
+            }
+            return true;
+        });
+    });
+</script>
+
+<!-- BEGIN PAGE -->
+<div class="page-content" style="min-height:648px !important">
+
+    <!-- BEGIN PAGE CONTENT-->
+
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <!-- BEGIN SAMPLE FORM PORTLET-->
+
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+
+                    <div class="caption"><i class="fa fa-plus"></i><{$Think.lang.user_order}></div>
+
+                </div>
+
+                <div class="portlet-body form">
+
+                    <!-- BEGIN FORM-->
+
+                    <form action="" method="POST" id="mainform" class="form-horizontal">
+                        <input type="hidden" id="uid" name="uid">
+                        <div class="form-body">
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_type}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="type" name="type">
+                                    <span class="help-block"><{$Think.lang.product_type_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_brand}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="brand" name="brand">
+                                    <span class="help-block"><{$Think.lang.product_brand_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_info}></label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" rows="2" id="product" name="product"></textarea>
+                                    <span class="help-block"><{$Think.lang.product_info_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_price}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="price" name="price">
+                                    <span class="help-block"><{$Think.lang.product_price_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_cost}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="cost" name="cost">
+                                    <span class="help-block"><{$Think.lang.product_cost_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_count}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="count" name="count">
+                                    <span class="help-block"><{$Think.lang.product_count_input}></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue"><i class="fa fa-plus"></i>&nbsp;<{$Think.lang.add}></button>
+                            <button type="button" class="btn" onclick="javascript:window.location.href='<{$v.self}>';"><i class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}></button>
+                        </div>
+
+                    </form>
+
+                    <!-- END FORM-->
+
+                </div>
+
+            </div>
+
+            <!-- END SAMPLE FORM PORTLET-->
+
+        </div>
+        <!-- END PAGE CONTENT-->
+
+    </div>
+    <!-- END PAGE CONTAINER-->
+
+</div>
+<!-- END PAGE -->
+
+<include file="Public/footer"/>

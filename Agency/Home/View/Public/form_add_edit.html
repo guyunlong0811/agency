@@ -1,0 +1,172 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        <foreach name="v.form_list" item="value" key="key">
+
+            <neq name="value.size" value="">
+                $("#<{$key}>").addClass('input-<{$value.size}>');
+            </neq>
+
+            <switch name="value.type">
+
+                <case value="radio">
+                    $("#<{$key}>_<{$value.default}>").attr('checked', true);
+                </case>
+
+                <default />
+                    $("#<{$key}>").val('<{$value.default}>');
+                    /*$("#<{$key}>").blur(function(){
+                        if($("#<{$key}>").val() == ''){
+                            $("#<{$key}>").val('<{$value.default}>');
+                        }
+                    });*/
+            </switch>
+
+        </foreach>
+
+
+        $("#<{$v.form}>").submit(function() {
+
+            <foreach name="v.form_list" item="value" key="key">
+
+                <notempty name="value.check">
+
+                    <foreach name="value.check" item="val" key="k">
+
+                        <switch name="k">
+
+                            <case value="require">
+                                if ($("#<{$key}>").val() == '') {
+                                    alert('<{$Think.lang.$val[alert]}>');
+                                    return false;
+                                }
+                            </case>
+
+                            <case value="length">
+                                if ($("#<{$key}>").val().length <{$val.compare}>) {
+                                    alert('<{$Think.lang.$val[alert]}>');
+                                    return false;
+                                }
+                            </case>
+
+                        </switch>
+
+                    </foreach>
+
+                </notempty>
+
+            </foreach>
+
+            return true;
+
+        });
+    });
+</script>
+
+<!-- BEGIN PAGE -->
+<div class="page-content" style="min-height:648px !important">
+
+    <!-- BEGIN PAGE CONTAINER-->
+    <div class="container-fluid">
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row-fluid">
+
+            <!-- BEGIN SAMPLE FORM PORTLET-->
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa <eq name="v.action" value="add">fa-plus<else />fa-edit</eq>"></i><{$Think.lang.$v[title]}></div>
+                </div>
+
+                <div class="portlet-body form">
+
+                    <!-- BEGIN FORM-->
+                    <form action="" method="<{$v.method}>" id="<{$v.form}>" class="form-horizontal">
+
+                        <input type="hidden" id="<{$v.hKey}>" name="<{$v.hKey}>" value="<{$v.hVal}>">
+
+                        <div class="form-body">
+
+                            <foreach name="v.form_list" item="value" key="key">
+
+                                <div class="form-group" id="div_<{$key}>">
+
+                                    <label class="col-md-3 control-label"><{$Think.lang.$value[left]}></label>
+
+                                        <switch name="value.type">
+
+                                            <case value="radio">
+                                                <div class="col-md-9 radio-list">
+                                            </case>
+
+                                            <default />
+                                                <div class="col-md-9">
+
+                                        </switch>
+
+                                        <switch name="value.type">
+
+                                            <case value="text">
+                                                <input type="text" class="form-control" id="<{$key}>" name="<{$key}>"/>
+                                            </case>
+
+                                            <case value="password">
+                                                <input type="password" class="form-control" id="<{$key}>" name="<{$key}>"/>
+                                            </case>
+
+                                            <case value="textarea">
+                                                <textarea class="form-control" rows="<{$value.rows}>" cols="<{$value.cols}>" id="<{$key}>" name="<{$key}>"></textarea>
+                                            </case>
+
+                                            <case value="radio">
+                                                <foreach name="value.list" item="rv" key="rk">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" id="<{$key}>_<{$rk}>" name="<{$key}>" value="<{$rk}>"/><{$Think.lang.$rv}>
+                                                    </label>
+                                                </foreach>
+                                            </case>
+
+                                        </switch>
+
+                                        <span class="help-block"><{$Think.lang.$value[button]}></span>
+
+                                    </div>
+
+                                </div>
+
+                            </foreach>
+
+                        </div>
+
+                        <div class="form-actions">
+
+                            <eq name="v.action" value="add">
+                                <button type="submit" class="btn blue"><i class="fa fa-plus"></i>&nbsp;<{$Think.lang.add}></button>
+                            <else />
+                                <button type="submit" class="btn blue"><i class="fa fa-edit"></i>&nbsp;<{$Think.lang.save}></button>
+                            </eq>
+
+                            <button type="button" class="btn"
+                                    onclick="javascript:window.location.href='<{$v.self}>';"><i
+                                    class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}>
+                            </button>
+
+                        </div>
+
+                    </form>
+                    <!-- END FORM-->
+
+                </div>
+
+            </div>
+            <!-- END SAMPLE FORM PORTLET-->
+
+        </div>
+        <!-- END PAGE CONTENT-->
+
+    </div>
+    <!-- END PAGE CONTAINER-->
+
+</div>
+<!-- END PAGE -->

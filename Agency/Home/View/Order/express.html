@@ -1,0 +1,137 @@
+<include file="Public/header"/>
+
+<include file="Public/sidebar"/>
+
+<script type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#oid").val('<{$v.get.oid}>');
+        $("#price").val('0.00');
+
+        $("#shipped").val('<{$vShipped}>');
+        $("#shipped").focus(function(){
+            WdatePicker({
+                dateFmt:'yyyy-MM-dd',
+            });
+        });
+        $("#shipped_button").click(function(){
+            WdatePicker({
+                el:'shipped',
+                dateFmt:'yyyy-MM-dd',
+            });
+        });
+
+        $("#price").blur(function () {
+            if (!($("#price").val() > 0)) {
+                $("#price").val('0.00');
+            }
+        });
+
+        $("#mainform").submit(function () {
+            if ($("#price").val() == '0.00') {
+                alert('<{$Think.lang.express_price_input}>');
+                return false;
+            } else if ($("#vendor").val() == '') {
+                alert('<{$Think.lang.express_vendor_input}>');
+                return false;
+            } else if ($("#track_id").val() == '') {
+                alert('<{$Think.lang.express_track_id_input}>');
+                return false;
+            }
+            return true;
+        });
+    });
+</script>
+
+<!-- BEGIN PAGE -->
+<div class="page-content" style="min-height:648px !important">
+
+    <!-- BEGIN PAGE CONTENT-->
+
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <!-- BEGIN SAMPLE FORM PORTLET-->
+
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+
+                    <div class="caption"><i class="fa fa-plus"></i><{$Think.lang.express_add}></div>
+
+                </div>
+
+                <div class="portlet-body form">
+
+                    <!-- BEGIN FORM-->
+
+                    <form action="" method="POST" id="mainform" class="form-horizontal">
+                        <input type="hidden" id="oid" name="oid">
+                        <div class="form-body">
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.express_vendor}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="vendor" name="vendor">
+                                    <span class="help-block"><{$Think.lang.express_vendor_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.express_track_id}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="track_id" name="track_id">
+                                    <span class="help-block"><{$Think.lang.express_track_id_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.express_price}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="price" name="price">
+                                    <span class="help-block"><{$Think.lang.express_price_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.express_shipped}></label>
+                                <div class="col-md-9">
+                                    <input style="float:left;" id="shipped" name="shipped" class="form-control input-medium" type="text" value="" />
+                                    <span style="float:left;">
+                                    <button id="shipped_button" class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <span class="help-block"><{$Think.lang.express_shipped_input}></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue"><i class="fa fa-plus"></i>&nbsp;<{$Think.lang.add}></button>
+                            <button type="button" class="btn" onclick="javascript:window.location.href='<{$v.self}>';"><i class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}></button>
+                        </div>
+
+                    </form>
+
+                    <!-- END FORM-->
+
+                </div>
+
+            </div>
+
+            <!-- END SAMPLE FORM PORTLET-->
+
+        </div>
+        <!-- END PAGE CONTENT-->
+
+    </div>
+    <!-- END PAGE CONTAINER-->
+
+</div>
+<!-- END PAGE -->
+
+<include file="Public/footer"/>

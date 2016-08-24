@@ -1,0 +1,147 @@
+<include file="Public/header"/>
+
+<include file="Public/sidebar"/>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#gender_-1").attr('checked', true);
+
+        $("#mainform").submit(function () {
+            if ($("#phone").val() == '' && $("#wechat").val() == '' && $("#nickname").val() == '' && $("#email").val() == '') {
+                alert('<{$Think.lang.user_add_least}>');
+                return false;
+            }
+            return true;
+        });
+    });
+</script>
+
+<!-- BEGIN PAGE -->
+<div class="page-content" style="min-height:648px !important">
+
+    <!-- BEGIN PAGE CONTENT-->
+
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <!-- BEGIN SAMPLE FORM PORTLET-->
+
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+
+                    <div class="caption"><i class="fa fa-plus"></i><{$Think.lang.user_add}></div>
+
+                </div>
+
+                <div class="portlet-body form">
+
+                    <!-- BEGIN FORM-->
+
+                    <form action="" method="POST" id="mainform" class="form-horizontal">
+
+                        <div class="form-body">
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_phone}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="phone" name="phone">
+                                    <span class="help-block"><{$Think.lang.user_phone_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_wechat}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="wechat" name="wechat">
+                                    <span class="help-block"><{$Think.lang.user_wechat_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_nickname}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="nickname" name="nickname">
+                                    <span class="help-block"><{$Think.lang.user_nickname_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_email}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="email" name="email">
+                                    <span class="help-block"><{$Think.lang.user_email_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_firstname}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="firstname"
+                                           name="firstname">
+                                    <span class="help-block"><{$Think.lang.user_firstname_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_lastname}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="lastname" name="lastname">
+                                    <span class="help-block"><{$Think.lang.user_lastname_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_gender}></label>
+                                <div class="col-md-9 radio-list">
+                                    <label class="radio-inline">
+                                        <input type="radio" id="gender_1" name="gender" value="1"/><{$Think.lang.male}>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" id="gender_0" name="gender" value="0"/><{$Think.lang.female}>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" id="gender_-1" name="gender" value="-1"/><{$Think.lang.unknown}>
+                                    </label>
+                                    <span class="help-block"><{$Think.lang.user_gender_select}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user_profile}></label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" rows="3" id="profile" name="profile"></textarea>
+                                    <span class="help-block"><{$Think.lang.user_profile_input}></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue"><i class="fa fa-plus"></i>&nbsp;<{$Think.lang.add}></button>
+                            <button type="button" class="btn" onclick="javascript:window.location.href='<{$v.self}>';"><i class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}></button>
+                        </div>
+
+                    </form>
+
+                    <!-- END FORM-->
+
+                </div>
+
+            </div>
+
+            <!-- END SAMPLE FORM PORTLET-->
+
+        </div>
+        <!-- END PAGE CONTENT-->
+
+    </div>
+    <!-- END PAGE CONTAINER-->
+
+</div>
+<!-- END PAGE -->
+
+<include file="Public/footer"/>

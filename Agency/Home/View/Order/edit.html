@@ -1,0 +1,208 @@
+<include file="Public/header"/>
+
+<include file="Public/sidebar"/>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#oid").val('<{$vRow.oid}>');
+        $("#user").val('<{$vRow.user}>');
+        $("#type").val('<{$vRow.type}>');
+        $("#brand").val('<{$vRow.brand}>');
+        $("#product").val('<{$vRow.product}>');
+        $("#price").val('<{$vRow.price}>');
+        $("#cost").val('<{$vRow.cost}>');
+        $("#count").val('<{$vRow.count}>');
+        $("#eid").val('<{$vRow.eid}>');
+        $("#comment").val('<{$vRow.comment}>');
+        $("#status_<{$vRow.status}>").attr('checked', true);
+
+
+        $("#type").blur(function () {
+            if ($("#type").val() == '') {
+                $("#type").val('<{$vRow.type}>');
+            }
+        });
+
+        $("#brand").blur(function () {
+            if ($("#brand").val() == '') {
+                $("#brand").val('<{$vRow.brand}>');
+            }
+        });
+
+        $("#product").blur(function () {
+            if ($("#product").val() == '') {
+                $("#product").val('<{$vRow.product}>');
+            }
+        });
+
+        $("#price").blur(function () {
+            if (!($("#price").val() > 0)) {
+                $("#price").val('<{$vRow.price}>');
+            }
+        });
+
+        $("#cost").blur(function () {
+            if (!($("#cost").val() > 0)) {
+                $("#cost").val('<{$vRow.cost}>');
+            }
+        });
+
+        $("#count").blur(function () {
+            if (!($("#count").val() > 0)) {
+                $("#count").val('<{$vRow.count}>');
+            }
+        });
+
+        $("#eid").blur(function () {
+            if (!($("#eid").val() > 0)) {
+                $("#eid").val('<{$vRow.eid}>');
+            }
+        });
+
+        $("#mainform").submit(function () {
+            return true;
+        });
+    });
+</script>
+
+<!-- BEGIN PAGE -->
+<div class="page-content" style="min-height:648px !important">
+
+    <!-- BEGIN PAGE CONTENT-->
+
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <!-- BEGIN SAMPLE FORM PORTLET-->
+
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+
+                    <div class="caption"><i class="fa fa-edit"></i><{$Think.lang.order_edit}></div>
+
+                </div>
+
+                <div class="portlet-body form">
+
+                    <!-- BEGIN FORM-->
+
+                    <form action="" method="POST" id="mainform" class="form-horizontal">
+                        <input type="hidden" id="oid" name="oid">
+                        <div class="form-body">
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.user}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="user" name="user" disabled>
+                                    <span class="help-block"><{$Think.lang.user}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_type}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="type" name="type">
+                                    <span class="help-block"><{$Think.lang.product_type_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_brand}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="brand" name="brand">
+                                    <span class="help-block"><{$Think.lang.product_brand_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_info}></label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" rows="2" id="product" name="product"></textarea>
+                                    <span class="help-block"><{$Think.lang.product_info_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_price}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="price" name="price">
+                                    <span class="help-block"><{$Think.lang.product_price_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_cost}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="cost" name="cost">
+                                    <span class="help-block"><{$Think.lang.product_cost_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.product_count}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="count" name="count">
+                                    <span class="help-block"><{$Think.lang.product_count_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.order_status}></label>
+                                <div class="col-md-9 radio-list">
+                                    <foreach name="vStatus" item="value" key="key">
+                                        <label class="radio-inline">
+                                            <input type="radio" id="status_<{$key}>" name="status" value="<{$key}>"/><{$Think.lang.$value}>
+                                        </label>
+                                    </foreach>
+                                    <span class="help-block"><{$Think.lang.order_status_select}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.express_id}></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" id="eid" name="eid">
+                                    <span class="help-block"><{$Think.lang.express_id_input}></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><{$Think.lang.order_comment}></label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" rows="3" id="comment" name="comment"></textarea>
+                                    <span class="help-block"><{$Think.lang.order_comment_input}></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue"><i class="fa fa-edit"></i>&nbsp;<{$Think.lang.save}>
+                            </button>
+                            <button type="button" class="btn" onclick="javascript:window.location.href='<{$v.self}>';"><i class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}>
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <!-- END FORM-->
+
+                </div>
+
+            </div>
+
+            <!-- END SAMPLE FORM PORTLET-->
+
+        </div>
+        <!-- END PAGE CONTENT-->
+
+    </div>
+    <!-- END PAGE CONTAINER-->
+
+</div>
+<!-- END PAGE -->
+
+<include file="Public/footer"/>

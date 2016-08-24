@@ -1,0 +1,159 @@
+<include file="Public/header"/>
+
+<include file="Public/sidebar"/>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('<{$v.get.type}>' != '') {
+            $("#type").val('<{$v.get.type}>');
+        }
+        if ('<{$v.get.brand}>' != '') {
+            $("#brand").val('<{$v.get.brand}>');
+        }
+        if ('<{$v.get.product}>' != '') {
+            $("#product").val('<{$v.get.product}>');
+        }
+        if ('<{$v.get.status}>' != '') {
+            $("#status").val('<{$v.get.status}>');
+        }
+    });
+</script>
+
+<div class="page-content" style="min-height:648px !important">
+
+    <div class="container-fluid">
+
+        <include file="Public/searchStart"/>
+
+        <input type="text" class="form-control input-small" placeholder="<{$Think.lang.product_type}>" id="type"
+               name="type">
+        &&
+        <input type="text" class="form-control input-small" placeholder="<{$Think.lang.product_brand}>" id="brand"
+               name="brand">
+        &&
+        <input type="text" class="form-control input-small" placeholder="<{$Think.lang.product_info}>" id="product"
+               name="product">
+        &&
+        <select class="form-control input-medium" id="status" name="status">
+            <option value=""><{$Think.lang.order_status_select}></option>
+            <foreach name="vStatus" item="value" key="key">
+                <option value=<{$key}>><{$Think.lang.$value}></option>
+            </foreach>
+        </select>
+        &&
+
+        <include file="Public/buttonSearch"/>
+        <include file="Public/selectDateStartEnd"/>
+
+        <include file="Public/searchEnd"/>
+
+        <include file="Public/tableStartEmpty"/>
+        <include file="Public/tableMiddle"/>
+
+        <table class="table table-striped table-bordered table-hover table-full-width">
+            <thead>
+            <tr>
+                <th><{$Think.lang.order_id}></th>
+                <th><{$Think.lang.order_user}></th>
+                <th><{$Think.lang.product_type}></th>
+                <th><{$Think.lang.product_brand}></th>
+                <th><{$Think.lang.product_price}></th>
+                <th><{$Think.lang.product_count}></th>
+                <th><{$Think.lang.order_status}></th>
+                <th><{$Think.lang.order_ctime}></th>
+                <th><{$Think.lang.express_id}></th>
+                <th colspan="2"><{$Think.lang.operation}></th>
+            </tr>
+            </thead>
+            <tbody>
+            <empty name="vList">
+                <tr>
+                    <td align="center" colspan="100%"><{$Think.lang.no_data}></td>
+                </tr>
+                <else/>
+                <foreach name="vList" item="value" key="key">
+                    <tr>
+                        <td><{$value.oid}></td>
+                        <td><{$value.user}></td>
+                        <td><{$value.type}></td>
+                        <td><{$value.brand}></td>
+                        <td><{$value.price}></td>
+                        <td><{$value.count}></td>
+                        <td><{$value.status}></td>
+                        <td><{$value.ctime}></td>
+                        <td>
+                            <{$value.eid}>
+                            &nbsp;
+                            <if condition="value.eid eq '0'">
+                                <a href="__URL__/express&oid=<{$value.oid}>&ret=<{$vSelfUrl}>">[<{$Think.lang.express_add}>]</a>
+                            <else/>
+                                <a href="__MODULE__/Express&eid=<{$value.eid}>">[<{$Think.lang.express_index}>]</a>
+                            </if>
+                        </td>
+                        <td>
+                            <a href="javascript:;" id="click_detail_<{$value.oid}>"><{$Think.lang.detail}></a>
+                        </td>
+                        <td>
+                            <a href="__URL__/edit&oid=<{$value.oid}>&ret=<{$vSelfUrl}>"><{$Think.lang.edit}></a>
+                        </td>
+                    </tr>
+                    <tr id="detail_<{$value.oid}>" style="display:none;">
+                        <td class="details" colspan="100%">
+                            <table class="table table-bordered table-hover table-full-width">
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-2"><{$Think.lang.product_info}></td>
+                                    <td><{$value.product}></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2"><{$Think.lang.product_cost}></td>
+                                    <td><{$value.cost}></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2"><{$Think.lang.order_profit}></td>
+                                    <td><{$value.profit}></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2"><{$Think.lang.order_endtime}></td>
+                                    <td><{$value.endtime}></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2"><{$Think.lang.order_comment}></td>
+                                    <td><{$value.comment}></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <input type="hidden" id="switch_detail_<{$value.oid}>" value="0"/>
+                    <input type="hidden" id="switch_create_<{$value.oid}>" value="0"/>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+
+                            //详情
+                            $("#click_detail_<{$value.oid}>").click(function () {
+                                if ($("#switch_detail_<{$value.oid}>").val() == '0') {
+                                    $("#click_detail_<{$value.oid}>").html('<{$Think.lang.close}>');
+                                    $("#switch_detail_<{$value.oid}>").val('1');
+                                    $("#detail_<{$value.oid}>").show('fast');
+                                } else {
+                                    $("#click_detail_<{$value.oid}>").html('<{$Think.lang.detail}>');
+                                    $("#switch_detail_<{$value.oid}>").val('0');
+                                    $("#detail_<{$value.oid}>").hide('fast');
+                                }
+                            });
+                        });
+                    </script>
+                </foreach>
+            </empty>
+            </tbody>
+        </table>
+
+        <{$vPageBar}>
+        <include file="Public/tableEndEmpty"/>
+
+    </div>
+
+</div>
+
+<include file="Public/footer"/>
