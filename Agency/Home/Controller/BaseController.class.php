@@ -176,6 +176,23 @@ class BaseController extends Controller
 		readfile($url);
 	}
 
+	//获取客户显示信息
+	protected function getUserDisplayName($info){
+		$user = $info['uid'];
+		if(!empty($info['nickname'])){
+			$user = $info['nickname'];
+		}else if(!empty($info['firstname']) && !empty($info['lastname'])){
+			$user = $info['lastname'] . $info['firstname'];
+		}else if(!empty($info['wechat'])){
+			$user = $info['wechat'];
+		}else if(!empty($info['email'])){
+			$user = $info['email'];
+		}else if(!empty($info['phone'])){
+			$user = $info['phone'];
+		}
+		return $user;
+	}
+
 	//脚本返回
 	protected function scriptReturn($error)
 	{

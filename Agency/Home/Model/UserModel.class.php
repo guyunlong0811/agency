@@ -3,7 +3,7 @@ namespace Home\Model;
 
 use Think\Model;
 
-class UsersModel extends BaseModel
+class UserModel extends BaseModel
 {
 
 	protected $_validate = array(
@@ -26,10 +26,10 @@ class UsersModel extends BaseModel
 	{
 		$where['uid'] = $uid;
 		$save['last_purchase_time'] = time();
-		$save['total_order_count'] = D('Orders')->getTotalCount($uid);;
-		$save['total_purchase'] = $totalPurchase = D('Orders')->getTotalPurchase($uid);
-		$totalCost = D('Orders')->getTotalCost($uid);
-		$totalExpress = D('Expresses')->getTotalPrice($uid);
+		$save['total_order_count'] = D('Order')->getTotalCount($uid);;
+		$save['total_purchase'] = $totalPurchase = D('Order')->getTotalPurchase($uid);
+		$totalCost = D('Order')->getTotalCost($uid);
+		$totalExpress = D('Express')->getTotalPrice($uid);
 		$save['total_profit'] = $totalPurchase - $totalCost - $totalExpress;
 		return $this->UpdateData($save, $where);
 	}

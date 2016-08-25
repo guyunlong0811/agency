@@ -3,7 +3,7 @@ namespace Home\Model;
 
 use Think\Model;
 
-class ExpressesModel extends BaseModel
+class ExpressModel extends BaseModel
 {
 
 	protected $_auto = array(

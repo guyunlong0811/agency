@@ -1,3 +1,7 @@
+<include file="Public/header"/>
+
+<include file="Public/sidebar"/>
+
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -10,14 +14,14 @@
             <switch name="value.type">
 
                 <case value="radio">
-                    $("#<{$key}>_<{$value.default}>").attr('checked', true);
+                    $("#<{$key}>_<{$value.value}>").attr('checked', true);
                 </case>
 
                 <default />
-                    $("#<{$key}>").val('<{$value.default}>');
+                    $("#<{$key}>").val('<{$value.value}>');
                     /*$("#<{$key}>").blur(function(){
                         if($("#<{$key}>").val() == ''){
-                            $("#<{$key}>").val('<{$value.default}>');
+                            $("#<{$key}>").val('<{$value.value}>');
                         }
                     });*/
             </switch>
@@ -170,3 +174,5 @@
 
 </div>
 <!-- END PAGE -->
+
+<include file="Public/footer"/>

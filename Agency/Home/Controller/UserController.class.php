@@ -31,7 +31,7 @@ class UserController extends BaseController
 			}
 
 			if (!empty($where)) {
-				$model = D('Users');
+				$model = D('User');
 				$order = array('uid' => 'asc',);
 				$page = $this->page($model);
 				$list = $model->page($this->pg . ',' . $page->listRows)->where($where)->order($order)->select();
@@ -78,7 +78,7 @@ class UserController extends BaseController
 			$add['total_profit'] = 0;
 			$add['total_order_count'] = 0;
 			$add['profile'] = I('post.profile') ? I('post.profile') : null;
-			if (false === D('Users')->CreateData($add)){
+			if (false === D('User')->CreateData($add)){
 				C('G_ERROR', 'fail');
 			}
 			C('G_ERROR', 'success');
@@ -103,14 +103,14 @@ class UserController extends BaseController
 			$save['email'] = I('post.email') ? I('post.email') : null;
 			$save['gender'] = I('post.gender');
 			$save['profile'] = I('post.profile') ? I('post.profile') : null;
-			if (false === D('Users')->UpdateData($save, $where)){
+			if (false === D('User')->UpdateData($save, $where)){
 				C('G_ERROR', 'fail');
 			}
 			C('G_ERROR', 'success');
 		}
 		//显示
 		end:
-		$this->vRow = D('Users')->getRow($uid);
+		$this->vRow = D('User')->getRow($uid);
 		$this->v['alert'] = get_error();
 		$this->display();//显示页面
 	}
@@ -126,11 +126,11 @@ class UserController extends BaseController
 			$add['price'] = round(I('post.price'), 2) * 100;
 			$add['cost'] = round(I('post.cost'), 2) * 100;
 			$add['count'] = I('post.count');
-			if (false === D('Orders')->CreateData($add)){
+			if (false === D('Order')->CreateData($add)){
 				C('G_ERROR', 'fail');
 			}
 			//重新计算用户统计信息
-			D('Users')->statistic(I('post.uid'));
+			D('User')->statistic(I('post.uid'));
 			C('G_ERROR', 'success');
 		}
 		//显示

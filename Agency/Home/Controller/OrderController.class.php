@@ -57,7 +57,7 @@ class OrderController extends BInitController
 			dump($where);
 			if (!empty($where)) {
 				$order['o.ctime'] = 'desc';
-				$list = M()->table('orders o')->field("`u`.*,`o`.*,`e`.`vendor`,`e`.`track_id`")->join("`users` `u` ON `u`.`uid`=`o`.`uid`")->join("LEFT JOIN `expresses` `e` ON `e`.`eid`=`o`.`eid`")->where($where)->order($order)->select();
+				$list = M()->table('order o')->field("`u`.*,`o`.*,`e`.`vendor`,`e`.`track_id`")->join("`user` `u` ON `u`.`uid`=`o`.`uid`")->join("LEFT JOIN `express` `e` ON `e`.`eid`=`o`.`eid`")->where($where)->order($order)->select();
 				if (!empty($list)) {
 					foreach ($list as $key => $value) {
 						$profit = $value['price'] - $value['cost'];
@@ -101,18 +101,18 @@ class OrderController extends BInitController
 				default:
 					$save['endtime'] = time();
 			}
-			if (false === D('Orders')->UpdateData($save, $where)){
+			if (false === D('Order')->UpdateData($save, $where)){
 				C('G_ERROR', 'fail');
 			}
 			//重新计算用户统计信息
-			D('Users')->statistic(I('post.uid'));
+			D('User')->statistic(I('post.uid'));
 			C('G_ERROR', 'success');
 		}
 
 		//显示
 		end:
-		$row1 = D('Orders')->getRow($oid);
-		$row2 = D('Users')->getRow($row1['uid']);
+		$row1 = D('Order')->getRow($oid);
+		$row2 = D('User')->getRow($row1['uid']);
 		$row = array_merge($row1, $row2);
 		$row['user'] = $this->getUserDisplayName($row);
 		$row['price'] = sprintf("%01.2f", $row['price'] / 100);
@@ -122,39 +122,22 @@ class OrderController extends BInitController
 		$this->display();//显示页面
 	}
 
-	//获取客户显示信息
-	private function getUserDisplayName($info){
-		$user = $info['uid'];
-		if(!empty($info['nickname'])){
-			$user = $info['nickname'];
-		}else if(!empty($info['firstname']) && !empty($info['lastname'])){
-			$user = $info['lastname'] . $info['firstname'];
-		}else if(!empty($info['wechat'])){
-			$user = $info['wechat'];
-		}else if(!empty($info['email'])){
-			$user = $info['email'];
-		}else if(!empty($info['phone'])){
-			$user = $info['phone'];
-		}
-		return $user;
-	}
-
 	//新增快递信息
 	public function express()
 	{
 		if (!empty($_POST)) {
 			$oid = I('post.oid');
-			$uid = D('Orders')->where(array('oid' => $oid))->getField('uid');
+			$uid = D('Order')->where(array('oid' => $oid))->getField('uid');
 			$add['vendor'] = I('post.vendor');
 			$add['track_id'] = I('post.track_id');
 			$add['price'] = I('post.price');
 			$add['shipped'] = I('post.shipped') ? I('post.shipped') : null;
-			if (false === $inserId = D('Expresses')->CreateData($add)){
+			if (false === $inserId = D('Express')->CreateData($add)){
 				C('G_ERROR', 'fail');
 			}
-			D('Orders')->express($oid, $inserId);
+			D('Order')->express($oid, $inserId);
 			//重新计算用户统计信息
-			D('Users')->statistic($uid);
+			D('User')->statistic($uid);
 			C('G_ERROR', 'success');
 		}
 		//显示
