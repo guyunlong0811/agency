@@ -1,138 +1,171 @@
+<!--公共页面头部-->
 <include file="Public/header"/>
 
+<!--公共页面左侧-->
 <include file="Public/sidebar"/>
 
+<!--日历选择控件-->
 <script type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+
+<!--全局JS-->
 <script type="text/javascript">
     $(document).ready(function () {
 
-        <foreach name="v.form_list" item="value" key="key">
+        <foreach name="v.form_list" item="iFormList" key="kFormList">
 
-            <neq name="value.size" value="">
-                $("#<{$key}>").addClass('input-<{$value.size}>');
-            </neq>
+            <notempty name="iFormList.w">
+                $("#<{$kFormList}>").addClass('input-<{$iFormList.w}>');
+            </notempty>
 
-            <switch name="value.type">
+            <notempty name="iFormList.h">
+                $("#<{$kFormList}>").addClass('input-<{$iFormList.h}>');
+            </notempty>
+
+            <switch name="iFormList.type">
 
                 <default />
-                    $("#<{$key}>").val('<{$value.value}>');
+                    $("#<{$kFormList}>").val('<{$iFormList.value}>');
             </switch>
 
         </foreach>
 
-        });
+    });
 </script>
 
+<!--主页面-->
 <div class="page-content" style="min-height:648px !important">
 
     <div class="container-fluid">
 
-        <div class="portlet box yellow">
-            <div class="portlet-title">
-                <div class="caption"><i class="fa fa-search"></i><{$Think.lang.$v[title]}></div>
-            </div>
-            <div class="portlet-body">
+        <!--过滤器-->
+        <notempty name="v.form_list">
 
-                <form action="" method="<{$v.method}>" id="<{$v.form}>" role="form">
+            <div class="portlet box yellow">
 
-                    <input type="hidden" name="s" value="<{$s}>">
+                <!--标题-->
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-search"></i><{$Think.lang.$v[title]}></div>
+                </div>
 
-                    <div class="row">
+                <!--筛选-->
+                <div class="portlet-body">
 
-                        <div class="col-md-12">
+                    <!--表单-->
+                    <form action="" method="<{$v.method}>" id="<{$v.form}>" role="form">
 
-                            <div class="input-group input">
+                        <!--隐藏当前页面s-->
+                        <input type="hidden" name="s" value="<{$s}>">
 
-                                <foreach name="v.form_list" item="value" key="key">
+                        <div class="row">
 
-                                    <switch name="value.type">
+                            <div class="col-md-12">
 
-                                        <case value="text">
-                                            <input type="text" class="form-control" id="<{$key}>" name="<{$key}>"
-                                                   placeholder="<{$Think.lang.$value[placeholder]}>"/>
-                                        </case>
+                                <div class="input-group input">
 
-                                        <case value="select">
-                                            <select class="form-control" id="<{$key}>" name="<{$key}>">
-                                                <foreach name="value.list" item="val" key="k">
-                                                    <option value=<{$k}>><{$Think.lang.$val}></option>
-                                                </foreach>
-                                            </select>
-                                        </case>
+                                    <foreach name="v.form_list" item="iFormList" key="kFormList">
 
-                                        <case value="date">
+                                        <switch name="iFormList.type">
 
-                                            <script type="text/javascript">
-                                                $(document).ready(function () {
-                                                    $("#<{$key}>").focus(function () {
-                                                        WdatePicker({
-                                                            dateFmt: '<{$value.fmt}>',
-                                                            minDate: '<{$value.min}>',
-                                                            maxDate: '<{$value.max}>'
+                                            <case value="text">
+                                                <input type="text" class="form-control" id="<{$kFormList}>" name="<{$kFormList}>" placeholder="<{$Think.lang.$iFormList[placeholder]}>"/>
+                                            </case>
+
+                                            <case value="select">
+                                                <select class="form-control" id="<{$kFormList}>" name="<{$kFormList}>">
+                                                    <foreach name="iFormList.list" item="iFormListList" key="kFormListList">
+                                                        <option value=<{$kFormListList}>><{$Think.lang.$iFormListList}></option>
+                                                    </foreach>
+                                                </select>
+                                            </case>
+
+                                            <case value="date">
+
+                                                <script type="text/javascript">
+                                                    $(document).ready(function () {
+                                                        $("#<{$kFormList}>").focus(function () {
+                                                            WdatePicker({
+                                                                dateFmt: '<{$iFormList.fmt}>',
+                                                                minDate: '<{$iFormList.min}>',
+                                                                maxDate: '<{$iFormList.max}>'
+                                                            });
+                                                        });
+                                                        $("#<{$kFormList}>_button").click(function () {
+                                                            WdatePicker({
+                                                                el: '<{$kFormList}>',
+                                                                dateFmt: '<{$iFormList.fmt}>',
+                                                                minDate: '<{$iFormList.min}>',
+                                                                maxDate: '<{$iFormList.max}>'
+                                                            });
                                                         });
                                                     });
-                                                    $("#<{$key}>_button").click(function () {
-                                                        WdatePicker({
-                                                            el: '<{$key}>',
-                                                            dateFmt: '<{$value.fmt}>',
-                                                            minDate: '<{$value.min}>',
-                                                            maxDate: '<{$value.max}>'
-                                                        });
-                                                    });
-                                                });
-                                            </script>
-                                            <input style="" id="<{$key}>" name="<{$key}>" class="form-control" type="text"/>
-                                            <button id="<{$key}>_button" class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </script>
+                                                <input style="" id="<{$kFormList}>" name="<{$kFormList}>" class="form-control" type="text"/>
+                                                <button id="<{$kFormList}>_button" class="btn default" type="button"><i class="fa fa-calendar"></i></button>
 
-                                        </case>
+                                            </case>
 
-                                    </switch>
+                                        </switch>
 
-                                    <{$value.link}>
+                                        <{$iFormList.link}>
 
-                                </foreach>
+                                    </foreach>
 
-                                <button class="btn red" type="submit">
-                                    <i class="fa fa-search"></i>
-                                    &nbsp;
-                                    <{$Think.lang.search}>
-                                </button>
+                                    <button class="btn red" type="submit">
+                                        <i class="fa fa-search"></i>
+                                        &nbsp;
+                                        <{$Think.lang.search}>
+                                    </button>
+
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
+                    </form>
 
-                </form>
+                </div>
 
             </div>
 
-        </div>
+        </notempty>
 
+        <!--列表-->
         <div class="portlet box blue">
 
+            <!--标题-->
             <div class="portlet-title">
                 <div class="caption"><i class="fa fa-table"></i><{$Think.lang.$v[title]}></div>
-                <div class="tools"></div>
+
+                <!--标题右侧链接-->
+                <notempty name="v.tools">
+                    <div class="tools">
+                        <a href="__CONTROLLER__/<{$v.tools.action}>&ret=<{$v.self}>" style="color:whitesmoke;"><{$v.tools.title}></a>
+                    </div>
+                </notempty>
             </div>
 
             <div class="portlet-body">
 
+                <!--表格-->
                 <table class="table table-striped table-bordered table-hover table-full-width">
 
                     <thead>
                     <tr>
-                        <foreach name="v.table" item="value" key="key">
-                            <th><{$Think.lang.$key}></th>
+
+                        <foreach name="v.table" item="iTable" key="kTitle">
+                            <th><{$Think.lang.$kTitle}></th>
                         </foreach>
+
                         <notempty name="v.operation">
                             <th><{$Think.lang.operation}></th>
                         </notempty>
+
                     </tr>
                     </thead>
 
                     <tbody>
+                    <!--a-->
                     <empty name="v.list">
 
                         <tr>
@@ -141,58 +174,117 @@
 
                     <else/>
 
-                        <foreach name="v.list" item="value" key="key">
+                        <foreach name="v.list" item="iList" key="kList">
                             <tr>
-                                <foreach name="v.table" item="val" key="k">
-                                    <td><{$value[$val[field]]}></td>
+                                <foreach name="v.table" item="iTable" key="kTable">
+                                    <switch name="iTable.type">
+
+                                        <case value="select">
+                                            <td>
+                                                <select class="form-control" id="<{$iTable.field}>_<{$iList.$v[idKey]}>">
+                                                    <foreach name="iTable.list" item="vTitle" key="kValue">
+                                                        <option value=<{$kValue}>><{$Think.lang.$vTitle}></option>
+                                                    </foreach>
+                                                </select>
+                                            </td>
+                                            <script type="text/javascript">
+                                                $(document).ready(function () {
+
+                                                    <notempty name="iTable.w">
+                                                        $("#<{$iTable.field}>_<{$iList.$v[idKey]}>").addClass('input-<{$iTable.w}>');
+                                                    </notempty>
+
+                                                    <notempty name="iTable.h">
+                                                        $("#<{$iTable.field}>_<{$iList.$v[idKey]}>").addClass('input-<{$iTable.h}>');
+                                                    </notempty>
+
+                                                    $("#<{$iTable.field}>_<{$iList.$v[idKey]}>").val('<{$iList.$iTable[field]}>');
+                                                    var begin_<{$iTable.field}>_<{$iList.$v[idKey]}> = $("#<{$iTable.field}>_<{$iList.$v[idKey]}>").val();
+
+                                                    $("#<{$iTable.field}>_<{$iList.$v[idKey]}>").change(function(){
+
+                                                        var current_<{$iTable.field}>_<{$iList.$v[idKey]}> = $("#<{$iTable.field}>_<{$iList.$v[idKey]}>").val();
+
+                                                        $.get("__CONTROLLER__/<{$iTable.action}>", {'<{$v[idKey]}>':'<{$iList.$v[idKey]}>', 'value':current_<{$iTable.field}>_<{$iList.$v[idKey]}>}, function(data){
+
+                                                            if (data.status == '1') {
+                                                                begin_<{$iTable.field}>_<{$iList.$v[idKey]}> = current_<{$iTable.field}>_<{$iList.$v[idKey]}>
+                                                            }else{
+                                                                $("#<{$iTable.field}>_<{$iList.$v[idKey]}>").val(begin_<{$iTable.field}>_<{$iList.$v[idKey]}>);
+                                                            }
+                                                            alert(data.msg);
+
+                                                        });
+
+                                                    });
+
+                                                });
+                                            </script>
+                                        </case>
+
+                                        <default />
+                                            <td><{$iList.$iTable[field]}></td>
+
+                                    </switch>
                                 </foreach>
                                 <!--<td>
-                                    <{$value.eid}>
+                                    <{$iList.eid}>
                                     &nbsp;
-                                    <if condition="value.eid eq '0'">
-                                        <a href="__URL__/express&oid=<{$value[$v[idKey]]}>&ret=<{$vSelfUrl}>">[<{$Think.lang.express_add}>]</a>
+                                    <if condition="iList.eid eq '0'">
+                                        <a href="__CONTROLLER__/express&oid=<{$iList.$v[idKey]}>&ret=<{$vSelfUrl}>">[<{$Think.lang.express_add}>]</a>
                                     <else/>
-                                        <a href="__MODULE__/Express&eid=<{$value.eid}>">[<{$Think.lang.express_index}>]</a>
+                                        <a href="__MODULE__/Express&eid=<{$iList.eid}>">[<{$Think.lang.express_index}>]</a>
                                     </if>
                                 </td>-->
                                 <td>
-                                    <a href="javascript:;" id="click_detail_<{$value[$v[idKey]]}>"><{$Think.lang.detail}></a>
-                                    |
-                                    <a href="__URL__/edit&oid=<{$value[$v[idKey]]}>&ret=<{$vSelfUrl}>"><{$Think.lang.edit}></a>
+                                    <foreach name="v.operation" item="iOperation" key="kOperation">
+                                        <switch name="iOperation.type">
+
+                                            <case value="detail">
+                                                <a href="javascript:;" id="click_detail_<{$iList.$v[idKey]}>"><{$Think.lang.$kOperation}></a>
+                                            </case>
+
+                                            <default />
+                                                <a href="__CONTROLLER__/<{$kOperation}>&<{$v.idKey}>=<{$iList.$v[idKey]}>&ret=<{$v.self}>"><{$Think.lang.$kOperation}></a>
+
+                                        </switch>
+                                        <{$iOperation.link}>
+                                    </foreach>
                                 </td>
                             </tr>
 
                             <notempty name="v.detail">
-                                
-                                <tr id="detail_<{$value[$v[idKey]]}>" style="display:none;">
+
+                                <!--表格详情页-->
+                                <tr id="detail_<{$iList.$v[idKey]}>" style="display:none;">
                                     <td class="details" colspan="100%">
                                         <table class="table table-bordered table-hover table-full-width">
                                             <tbody>
-                                            <foreach name="v.detail" item="val" key="k">
+
+                                            <foreach name="v.detail" item="iDetail" key="kDetail">
                                                 <tr>
-                                                    <td class="col-md-2"><{$Think.lang.$k}></td>
-                                                    <td><{$value[$val[field]]}></td>
+                                                    <td class="col-md-2"><{$Think.lang.$kDetail}></td>
+                                                    <td><{$iList.$iDetail[field]}></td>
                                                 </tr>
                                             </foreach>
+
                                             </tbody>
                                         </table>
                                     </td>
                                 </tr>
-                                <input type="hidden" id="switch_detail_<{$value[$v[idKey]]}>" value="0"/>
-                                <input type="hidden" id="switch_create_<{$value[$v[idKey]]}>" value="0"/>
+                                <input type="hidden" id="switch_detail_<{$iList.$v[idKey]}>" value="0"/>
+                                <input type="hidden" id="switch_create_<{$iList.$v[idKey]}>" value="0"/>
                                 <script type="text/javascript">
                                     $(document).ready(function () {
-
-                                        //详情
-                                        $("#click_detail_<{$value[$v[idKey]]}>").click(function () {
-                                            if ($("#switch_detail_<{$value[$v[idKey]]}>").val() == '0') {
-                                                $("#click_detail_<{$value[$v[idKey]]}>").html('<{$Think.lang.close}>');
-                                                $("#switch_detail_<{$value[$v[idKey]]}>").val('1');
-                                                $("#detail_<{$value[$v[idKey]]}>").show('fast');
+                                        $("#click_detail_<{$iList.$v[idKey]}>").click(function () {
+                                            if ($("#switch_detail_<{$iList.$v[idKey]}>").val() == '0') {
+                                                $("#click_detail_<{$iList.$v[idKey]}>").html('<{$Think.lang.close}>');
+                                                $("#switch_detail_<{$iList.$v[idKey]}>").val('1');
+                                                $("#detail_<{$iList.$v[idKey]}>").show('fast');
                                             } else {
-                                                $("#click_detail_<{$value[$v[idKey]]}>").html('<{$Think.lang.detail}>');
-                                                $("#switch_detail_<{$value[$v[idKey]]}>").val('0');
-                                                $("#detail_<{$value[$v[idKey]]}>").hide('fast');
+                                                $("#click_detail_<{$iList.$v[idKey]}>").html('<{$Think.lang.detail}>');
+                                                $("#switch_detail_<{$iList.$v[idKey]}>").val('0');
+                                                $("#detail_<{$iList.$v[idKey]}>").hide('fast');
                                             }
                                         });
                                     });
@@ -208,7 +300,9 @@
 
                 </table>
 
-                <{$vPageBar}>
+                <eq name="v.isPage" value="1">
+                    <{$vPageBar}>
+                </eq>
 
             </div>
         </div>
@@ -217,4 +311,5 @@
 
 </div>
 
+<!--页面底部-->
 <include file="Public/footer"/>

@@ -115,8 +115,8 @@ class IndexController extends BaseController
 		);
 
 		$this->v['operation'] = array(
-			'detail' => array(),
-			'edit' => array(),
+			'detail' => array('type' => 'detail'),
+			'edit' => array('type' => 'a', 'href' => __URL__ . '/edit&oid=<{$value[$v[idKey]]}>&ret=<{$vSelfUrl}>'),
 		);
 
 		$this->v['detail'] = array(
@@ -157,18 +157,6 @@ class IndexController extends BaseController
 					),
 				),
 			),
-			'nickname' => array(
-				'type' => 'text',
-				'left' => 'admin_nickname',
-				'button' => 'nickname_require',
-				'size' => 'medium',
-				'value' => '',
-				'check' => array(
-					'require' => array(
-						'alert' => 'nickname_require',
-					),
-				),
-			),
 			'password' => array(
 				'type' => 'password',
 				'left' => 'admin_pwd',
@@ -185,22 +173,6 @@ class IndexController extends BaseController
 					),
 				),
 			),
-			'repassword' => array(
-				'type' => 'password',
-				'left' => 'admin_repwd',
-				'button' => 'pwd_confirm',
-				'size' => 'medium',
-				'value' => '',
-				'check' => array(
-					'require' => array(
-						'alert' => 'repassword_error',
-					),
-					'length' => array(
-						'compare' => "!= $('#repassword').val()",
-						'alert' => 'repassword_error',
-					),
-				),
-			),
 			'ip_limit' => array(
 				'type' => 'textarea',
 				'left' => 'ip_limit',
@@ -210,7 +182,6 @@ class IndexController extends BaseController
 				'size' => '',
 				'value' => '',
 			),
-
 			'gender' => array(
 				'type' => 'radio',
 				'left' => 'user_gender',
@@ -218,9 +189,9 @@ class IndexController extends BaseController
 				'size' => '',
 				'value' => '1',
 				'list' => array(
-					'1' => 'male',
-					'0' => 'female',
-					'-1' => 'unknown',
+					'1' => array('name' => 'male','disabled' => ''),
+					'0' => array('name' => 'female','disabled' => ''),
+					'-1' => array('name' => 'male','unknown' => ''),
 				),
 			),
 		);

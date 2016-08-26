@@ -93,20 +93,17 @@ class AdminModel extends BaseModel
 	}
 
 	//修改状态
-	public function changeStatus($id)
+	public function changeStatus($id, $status)
 	{
-		$sql = "update `admin_account` set `status`=1-`status` where `id`='{$id}'";
-		$row = $this->ExecuteData($sql);
+		$save['status'] = $status;
+		$where['id'] = $id;
+		$row = $this->UpdateData($save, $where);
 		if ($row === false) {
 			C('G_ERROR', 'db_error');//报错
-			return false;
-		} else if ($row == 0) {
-			C('G_ERROR', 'no_update');//报错
 			return false;
 		} else {
 			return $row;
 		}
-
 	}
 
 }

@@ -19,6 +19,7 @@ return array(
 	"admin_pwd" => '管理员密码',
 	"admin_repwd" => '确认密码',
 	"admin_add" => '新增管理员',
+	"admin_edit" => '修改管理员信息',
 
 
 
@@ -119,7 +120,8 @@ return array(
 
 	//word
 	'operation' => '操作',
-
+	'status_active' => '激活',
+	'status_banned' => '封禁',
 
 
 
@@ -156,7 +158,8 @@ return array(
 	'pwd_confirm' => '输入确认密码',
 	'ip_limit_input' => '输入该帐号登录限制IP，多个IP用分号"#"分割',
 	'dbname_exist' => '数据库已经存在',
-	'platform_sid_exist' => '平台网管ID已经存在',
+	'illegal_ajax' => '非法Ajax请求',
+
 
 	//global
 	'search' => '查询',

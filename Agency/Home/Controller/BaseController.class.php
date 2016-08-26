@@ -78,7 +78,14 @@ class BaseController extends Controller
 		$this->s = '/' . MODULE_NAME . '/' . CONTROLLER_NAME . '/' . ACTION_NAME;
 		$this->v['get'] = $_GET;
 		$this->v['post'] = $_POST;
-		$this->v['self'] = __SELF__ == '' ? urlencode(__SELF__) : '###';
+		if(isset($this->v['post']['ret'])){
+			$this->v['ret'] = $this->v['post']['ret'];
+		}else if(isset($this->v['get']['ret'])){
+			$this->v['ret'] = $this->v['get']['ret'];
+		}else{
+			$this->v['ret'] = __CONTROLLER__;
+		}
+		$this->v['self'] = __SELF__ != '' ? urlencode(__SELF__) : '###';
 
 	}
 
@@ -174,6 +181,16 @@ class BaseController extends Controller
 		header('Content-type: text/plain');
 		header('Content-Disposition: attachment; filename="' . $file . '"');
 		readfile($url);
+	}
+
+	//http下载头部
+	public function adminDisplay($display, $assign = array())
+	{
+		$assign['v'] = $this->v;
+		foreach ($assign as $key => $item) {
+			$this->assign($key, $item);
+		}
+		$this->display($display);//显示页面
 	}
 
 	//获取客户显示信息

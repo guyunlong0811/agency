@@ -3,27 +3,42 @@
 <include file="Public/sidebar"/>
 
 <script type="text/javascript">
+
+    /*$("#<{$kFormList}>").blur(function(){
+     if($("#<{$kFormList}>").val() == ''){
+     $("#<{$kFormList}>").val('<{$iFormList.value}>');
+     }
+     });*/
     $(document).ready(function() {
 
-        <foreach name="v.form_list" item="value" key="key">
+        <foreach name="v.form_list" item="iFormList" key="kFormList">
 
-            <neq name="value.size" value="">
-                $("#<{$key}>").addClass('input-<{$value.size}>');
-            </neq>
+            <notempty name="iFormList.w">
+                $("#<{$kFormList}>").addClass('input-<{$iFormList.w}>');
+            </notempty>
 
-            <switch name="value.type">
+            <notempty name="iFormList.h">
+                $("#<{$kFormList}>").addClass('input-<{$iFormList.h}>');
+            </notempty>
+
+
+
+            <switch name="iFormList.type">
 
                 <case value="radio">
-                    $("#<{$key}>_<{$value.value}>").attr('checked', true);
+
+                    $("#<{$kFormList}>_<{$iFormList.value}>").attr('checked', true);
+
                 </case>
 
                 <default />
-                    $("#<{$key}>").val('<{$value.value}>');
-                    /*$("#<{$key}>").blur(function(){
-                        if($("#<{$key}>").val() == ''){
-                            $("#<{$key}>").val('<{$value.value}>');
-                        }
-                    });*/
+
+                    <eq name="iFormList.disabled" value="1">
+                        $("#<{$kFormList}>").attr('disabled', true);
+                    </eq>
+
+                    $("#<{$kFormList}>").val('<{$iFormList.value}>');
+
             </switch>
 
         </foreach>
@@ -31,26 +46,33 @@
 
         $("#<{$v.form}>").submit(function() {
 
-            <foreach name="v.form_list" item="value" key="key">
+            <foreach name="v.form_list" item="iFormList" key="kFormList">
 
-                <notempty name="value.check">
+                <notempty name="iFormList.check">
 
-                    <foreach name="value.check" item="val" key="k">
+                    <foreach name="iFormList.check" item="iFormListCheck" key="kFormListCheck">
 
-                        <switch name="k">
+                        <switch name="kFormListCheck">
 
                             <case value="require">
-                                if ($("#<{$key}>").val() == '') {
-                                    alert('<{$Think.lang.$val[alert]}>');
+                                if ($("#<{$kFormList}>").val() == '') {
+                                    alert('<{$Think.lang.$iFormListCheck[alert]}>');
                                     return false;
                                 }
                             </case>
 
                             <case value="length">
-                                if ($("#<{$key}>").val().length <{$val.compare}>) {
-                                    alert('<{$Think.lang.$val[alert]}>');
+                                if ($("#<{$kFormList}>").val().length != 0 && $("#<{$kFormList}>").val().length <{$iFormListCheck.compare}>) {
+                                    alert('<{$Think.lang.$iFormListCheck[alert]}>');
                                     return false;
                                 }
+                            </case>
+
+                            <case value="value">
+                            if ($("#<{$kFormList}>").val() <{$iFormListCheck.compare}>) {
+                                alert('<{$Think.lang.$iFormListCheck[alert]}>');
+                                return false;
+                            }
                             </case>
 
                         </switch>
@@ -89,16 +111,17 @@
                     <form action="" method="<{$v.method}>" id="<{$v.form}>" class="form-horizontal">
 
                         <input type="hidden" id="<{$v.hKey}>" name="<{$v.hKey}>" value="<{$v.hVal}>">
+                        <input type="hidden" id="ret" name="ret" value="<{$v.ret}>">
 
                         <div class="form-body">
 
-                            <foreach name="v.form_list" item="value" key="key">
+                            <foreach name="v.form_list" item="iFormList" key="kFormList">
 
-                                <div class="form-group" id="div_<{$key}>">
+                                <div class="form-group" id="div_<{$kFormList}>">
 
-                                    <label class="col-md-3 control-label"><{$Think.lang.$value[left]}></label>
+                                    <label class="col-md-3 control-label"><{$Think.lang.$iFormList[left]}></label>
 
-                                        <switch name="value.type">
+                                        <switch name="iFormList.type">
 
                                             <case value="radio">
                                                 <div class="col-md-9 radio-list">
@@ -109,31 +132,33 @@
 
                                         </switch>
 
-                                        <switch name="value.type">
+                                        <switch name="iFormList.type">
 
                                             <case value="text">
-                                                <input type="text" class="form-control" id="<{$key}>" name="<{$key}>"/>
+                                                <input type="text" class="form-control" id="<{$kFormList}>" name="<{$kFormList}>"/>
                                             </case>
 
                                             <case value="password">
-                                                <input type="password" class="form-control" id="<{$key}>" name="<{$key}>"/>
+                                                <input type="password" class="form-control" id="<{$kFormList}>" name="<{$kFormList}>"/>
                                             </case>
 
                                             <case value="textarea">
-                                                <textarea class="form-control" rows="<{$value.rows}>" cols="<{$value.cols}>" id="<{$key}>" name="<{$key}>"></textarea>
+                                                <textarea class="form-control" rows="<{$iFormList.rows}>" cols="<{$iFormList.cols}>" id="<{$kFormList}>" name="<{$kFormList}>"></textarea>
                                             </case>
 
                                             <case value="radio">
-                                                <foreach name="value.list" item="rv" key="rk">
+
+                                                <foreach name="iFormList.list" item="iFormListList" key="kFormListList">
                                                     <label class="radio-inline">
-                                                        <input type="radio" id="<{$key}>_<{$rk}>" name="<{$key}>" value="<{$rk}>"/><{$Think.lang.$rv}>
+                                                        <input type="radio" id="<{$kFormList}>_<{$kFormListList}>" name="<{$kFormList}>" value="<{$kFormListList}>" disabled="<{$iFormListList.disabled}>" /><{$Think.lang.$iFormListList[name]}>
                                                     </label>
                                                 </foreach>
+
                                             </case>
 
                                         </switch>
 
-                                        <span class="help-block"><{$Think.lang.$value[button]}></span>
+                                        <span class="help-block"><{$Think.lang.$iFormList[button]}></span>
 
                                     </div>
 
@@ -151,10 +176,7 @@
                                 <button type="submit" class="btn blue"><i class="fa fa-edit"></i>&nbsp;<{$Think.lang.save}></button>
                             </eq>
 
-                            <button type="button" class="btn"
-                                    onclick="javascript:window.location.href='<{$v.self}>';"><i
-                                    class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}>
-                            </button>
+                            <button type="button" class="btn" onclick="javascript:window.location.href='<{$v.ret}>'";"><i class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}></button>
 
                         </div>
 
