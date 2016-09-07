@@ -26,7 +26,7 @@ class IndexController extends BaseController
 	public function show_list()
 	{
 		$order['`o`.`ctime`'] = 'desc';
-		$list = M()->table(array('order'=>'o'))->field("`u`.*,`o`.*,`e`.`vendor`,`e`.`track_id`")->join("`user` `u` ON `u`.`uid`=`o`.`uid`")->join("LEFT JOIN `express` `e` ON `e`.`eid`=`o`.`eid1` || `e`.`eid`=`o`.`eid2`")->order($order)->select();
+		$list = M()->table(array('order' => 'o'))->field("`u`.*,`o`.*,`e`.`vendor`,`e`.`track_id`")->join("`user` `u` ON `u`.`uid`=`o`.`uid`")->join("LEFT JOIN `express` `e` ON `e`.`eid`=`o`.`eid1` || `e`.`eid`=`o`.`eid2`")->order($order)->select();
 		if (!empty($list)) {
 			foreach ($list as $key => $value) {
 				$profit = $value['price'] - $value['cost'];
@@ -131,72 +131,10 @@ class IndexController extends BaseController
 		$this->display('Public/list');
 	}
 
-	public function add_edit()
+	public function test()
 	{
-
-		$this->v['form'] = 'main';
-		$this->v['title'] = 'admin_add';
-		$this->v['method'] = 'post';
-		$this->v['action'] = 'add';
-		$this->v['hKey'] = 'uid';
-		$this->v['hVal'] = '1';
-		$this->v['form_list'] = array(
-			'username' => array(
-				'type' => 'text',
-				'left' => 'admin_account',
-				'button' => 'username_require',
-				'size' => 'medium',//xsmall | small | medium | large | xlarge | ''
-				'value' => '',
-				'check' => array(
-					'require' => array(
-						'alert' => 'username_require',
-					),
-					'length' => array(
-						'compare' => "< 4",
-						'alert' => 'username_length',
-					),
-				),
-			),
-			'password' => array(
-				'type' => 'password',
-				'left' => 'admin_pwd',
-				'button' => 'pwd_input',
-				'size' => 'medium',
-				'value' => '',
-				'check' => array(
-					'require' => array(
-						'alert' => 'password_require',
-					),
-					'length' => array(
-						'compare' => "< 6",
-						'alert' => 'password_length',
-					),
-				),
-			),
-			'ip_limit' => array(
-				'type' => 'textarea',
-				'left' => 'ip_limit',
-				'button' => 'ip_limit_input',
-				'cols' => '',
-				'rows' => '3',
-				'size' => '',
-				'value' => '',
-			),
-			'gender' => array(
-				'type' => 'radio',
-				'left' => 'user_gender',
-				'button' => 'user_gender_select',
-				'size' => '',
-				'value' => '1',
-				'list' => array(
-					'1' => array('name' => 'male','disabled' => ''),
-					'0' => array('name' => 'female','disabled' => ''),
-					'-1' => array('name' => 'male','unknown' => ''),
-				),
-			),
-		);
-		$this->assign('v', $this->v);
-		$this->display('Public/add_edit');
+		$rs = D('Category')->getTree();
+		dump($rs);
 	}
 
 }

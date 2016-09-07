@@ -186,6 +186,7 @@ class BaseController extends Controller
 	//http下载头部
 	public function adminDisplay($display, $assign = array())
 	{
+		$this->v['alert'] = get_error();
 		$assign['v'] = $this->v;
 		foreach ($assign as $key => $item) {
 			$this->assign($key, $item);

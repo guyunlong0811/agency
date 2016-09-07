@@ -11,7 +11,7 @@
  Target Server Version : 50712
  File Encoding         : utf-8
 
- Date: 08/25/2016 15:47:31 PM
+ Date: 09/07/2016 18:45:07 PM
 */
 
 SET NAMES utf8;
@@ -32,13 +32,13 @@ CREATE TABLE `admin` (
   `last_login_ip` char(16) DEFAULT NULL COMMENT '上次登录IP',
   `status` tinyint(1) NOT NULL COMMENT '状态(0:封禁;1:正常;)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Records of `admin`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin` VALUES ('1', 'admin', 'Admin', 'e10adc3949ba59abbe56e057f20f883e', '1500000000', '', '1472108809', '::1', '1');
+INSERT INTO `admin` VALUES ('1', 'admin', 'Admin', 'e10adc3949ba59abbe56e057f20f883e', '1472195276', '', '1473219717', '::1', '1'), ('2', 'eric', '暴暴', 'e10adc3949ba59abbe56e057f20f883e', '1472199287', '', null, null, '1');
 COMMIT;
 
 -- ----------------------------
@@ -60,7 +60,14 @@ CREATE TABLE `category` (
   `fid` int(10) unsigned NOT NULL COMMENT '父ID',
   `name` varchar(64) NOT NULL COMMENT '分类名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `category`
+-- ----------------------------
+BEGIN;
+INSERT INTO `category` VALUES ('1', '0', '江西省'), ('2', '0', '黑龙江省'), ('3', '1', '南昌市'), ('4', '2', '哈尔滨市'), ('5', '2', '鸡西市'), ('6', '4', '香坊区'), ('7', '4', '南岗区'), ('8', '6', '和兴路'), ('9', '7', '西大直街'), ('10', '8', '东北林业大学'), ('11', '9', '哈尔滨工业大学'), ('12', '8', '哈尔滨师范大学'), ('13', '1', '赣州市'), ('14', '13', '赣县'), ('15', '13', '于都县'), ('16', '14', '茅店镇'), ('17', '14', '大田乡'), ('18', '16', '义源村'), ('19', '16', '上坝村');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `express`
@@ -135,26 +142,25 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `uid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `phone` char(16) DEFAULT NULL COMMENT '手机号',
-  `wechat` char(64) DEFAULT NULL COMMENT '微信号',
+  `real_name` varchar(32) DEFAULT NULL COMMENT '名',
   `nickname` varchar(32) DEFAULT NULL COMMENT '昵称',
-  `firstname` varchar(16) DEFAULT NULL COMMENT '名',
-  `lastname` varchar(16) DEFAULT NULL COMMENT '姓',
+  `wechat` char(64) DEFAULT NULL COMMENT '微信号',
   `email` varchar(128) DEFAULT NULL COMMENT '电子邮箱',
-  `gender` tinyint(3) NOT NULL COMMENT '性别(1:男;0:女;-1:未知;)',
+  `gender` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT '性别(1:男;0:女;2:未知;)',
   `last_purchase_time` int(10) unsigned DEFAULT NULL COMMENT '最近一次购买时间',
   `total_purchase` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '总花费',
-  `total_profit` int(10) NOT NULL DEFAULT '0' COMMENT '总利润',
   `total_order_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '总订单数量',
   `ctime` int(10) unsigned NOT NULL COMMENT '创建时间',
   `profile` text COMMENT '用户描述',
+  `invite_uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '介绍人UID',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', '13764426340', 'guyunlong0811', '暴暴', '云龙', '顾', 'guyunlong0811@126.com', '1', '1471602801', '200000', '79994', '1', '1471513434', 'test'), ('2', '18019116118', null, null, '梦姣', '赵', 'mengjiao871025@126.com', '0', null, '0', '0', '0', '1471513434', 'aaa');
+INSERT INTO `user` VALUES ('1', '13764426340', '顾云龙', '暴暴', 'guyunlong0811', 'guyunlong0811@126.com', '1', '1471602801', '200000', '1', '1471513434', 'test', '0'), ('2', '18019116118', '赵梦姣', null, null, 'mengjiao871025@126.com', '0', null, '0', '0', '1471513434', 'aaa', '0'), ('3', '18019116118', '顾歆妤', '肉包', null, null, '0', null, '0', '0', '1473234218', null, '0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

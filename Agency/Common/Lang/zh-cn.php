@@ -40,6 +40,8 @@ return array(
 	'express_index' => '查看快递信息',
 	'express_add' => '填写快递信息',
 
+
+	//用户模块
 	'uid' => '客户ID',
 	'user' => '客户',
 	'user_phone' => '客户手机号码',
@@ -47,25 +49,22 @@ return array(
 	'user_nickname' => '客户昵称',
 	'user_email' => '客户电子邮箱',
 	'user_name' => '客户姓名',
-	'user_firstname' => '客户名',
-	'user_lastname' => '客户姓',
 	'user_gender' => '客户性别',
 	'user_ctime' => '客户创建时间',
 	'user_last_purchase_time' => '客户最近购买时间',
 	'user_total_purchase' => '客户总流水',
-	'user_total_order_count' => '客户总下单数',
-	'user_total_profit' => '客户总净利润',
+	'user_total_order_count' => '客户总单数',
 	'user_profile' => '客户描述',
+	'user_invite_uid' => '客户邀请人',
 
 	'user_phone_input' => '请输入客户手机号码',
 	'user_wechat_input' => '请输入客户微信号码',
 	'user_nickname_input' => '请输入客户昵称',
 	'user_email_input' => '请输入客户电子邮箱',
-	'user_firstname_input' => '请输入客户名',
-	'user_lastname_input' => '请输入客户姓',
+	'user_name_input' => '请输入客户姓姓名',
 	'user_profile_input' => '请输入客户描述',
 	'user_gender_select' => '请选择客户性别',
-	'user_add_least' => '至少输入一种客户身份（手机,微信,昵称,电子邮件)',
+	'user_invite_uid_input' => '请输入客户邀请人UID',
 
 	'male' => '男',
 	'female' => '女',
@@ -133,11 +132,10 @@ return array(
 	'pay_user' => '充值用户数',
 	'data_pay_cash_total' => '总充值数据',
 
-	//错误提示
+	//管理员模块
 	'success' => '操作成功',
 	'fail' => '操作失败',
 	'no_update' => '没有修改任何数据',
-	'ip_limit' => 'IP限制登录',
 	'admin_not_exist' => '管理员不存在',
 	'username_existed' => '管理员已存在',
 	'username_require' => '账号不能为空',
@@ -223,6 +221,8 @@ return array(
 	'index' => '编号',
 	'exchange' => '替换',
 	'copy' => '复制',
+	'required' => '必填',
+	'optional' => '选填',
 
 
 	'select_all' => '全选',

@@ -10,7 +10,6 @@ class AdminController extends BaseController
 		'0' => 'status_banned',
 	);
 
-
 	public function _initialize()
 	{
 		parent::_initialize();
@@ -93,8 +92,6 @@ class AdminController extends BaseController
 			if ($id > 0){
 				C('G_ERROR', 'success');
 			}
-
-			$this->v['alert'] = get_error();
 		}
 
 		//显示
@@ -103,6 +100,7 @@ class AdminController extends BaseController
 		$this->v['title'] = 'admin_add';
 		$this->v['method'] = 'post';
 		$this->v['action'] = 'add';
+		$this->v['fa'] = 'plus';
 		$this->v['form_list'] = array(
 			'username' => array(
 				'type' => 'text',
@@ -204,7 +202,6 @@ class AdminController extends BaseController
 				C('G_ERROR', 'fail');
 			}
 
-			$this->v['alert'] = get_error();
 		}
 
 		end:
@@ -220,6 +217,7 @@ class AdminController extends BaseController
 		$this->v['title'] = 'admin_edit';
 		$this->v['method'] = 'post';
 		$this->v['action'] = 'edit';
+		$this->v['fa'] = 'edit';
 		$this->v['hKey'] = 'id';
 		$this->v['hVal'] = $id;
 		$this->v['form_list'] = array(
@@ -337,7 +335,6 @@ class AdminController extends BaseController
 		//显示
 		end:
 		$this->super = in_array(I('get.id'), get_config('super_admin')) ? '1' : '0';
-		$this->v['alert'] = get_error();
 		$this->display();//显示页面
 	}
 

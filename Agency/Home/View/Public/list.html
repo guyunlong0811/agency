@@ -24,7 +24,7 @@
             <switch name="iFormList.type">
 
                 <default />
-                    $("#<{$kFormList}>").val('<{$iFormList.value}>');
+                    $("#<{$kFormList}>").val('<{$v.get.$kFormList}>');
             </switch>
 
         </foreach>
@@ -147,7 +147,7 @@
 
             <div class="portlet-body">
 
-                <!--表格-->
+                <!-- 表格 -->
                 <table class="table table-striped table-bordered table-hover table-full-width">
 
                     <thead>
@@ -165,21 +165,28 @@
                     </thead>
 
                     <tbody>
-                    <!--a-->
+                    <!-- 表格数据 -->
                     <empty name="v.list">
 
+                        <!-- 空数据 -->
                         <tr>
                             <td align="center" colspan="100%"><{$Think.lang.no_data}></td>
                         </tr>
 
                     <else/>
 
+                        <!-- 数据遍历 -->
                         <foreach name="v.list" item="iList" key="kList">
+
                             <tr>
+
                                 <foreach name="v.table" item="iTable" key="kTable">
+
+                                    <!-- 数据类型 -->
                                     <switch name="iTable.type">
 
                                         <case value="select">
+
                                             <td>
                                                 <select class="form-control" id="<{$iTable.field}>_<{$iList.$v[idKey]}>">
                                                     <foreach name="iTable.list" item="vTitle" key="kValue">
@@ -220,39 +227,45 @@
 
                                                 });
                                             </script>
+
                                         </case>
 
                                         <default />
                                             <td><{$iList.$iTable[field]}></td>
 
                                     </switch>
+
                                 </foreach>
-                                <!--<td>
-                                    <{$iList.eid}>
-                                    &nbsp;
-                                    <if condition="iList.eid eq '0'">
-                                        <a href="__CONTROLLER__/express&oid=<{$iList.$v[idKey]}>&ret=<{$vSelfUrl}>">[<{$Think.lang.express_add}>]</a>
-                                    <else/>
-                                        <a href="__MODULE__/Express&eid=<{$iList.eid}>">[<{$Think.lang.express_index}>]</a>
-                                    </if>
-                                </td>-->
+
+                                <!-- 数据操作 -->
                                 <td>
                                     <foreach name="v.operation" item="iOperation" key="kOperation">
                                         <switch name="iOperation.type">
 
                                             <case value="detail">
-                                                <a href="javascript:;" id="click_detail_<{$iList.$v[idKey]}>"><{$Think.lang.$kOperation}></a>
+                                                <a href="javascript:;" id="click_detail_<{$iList.$v[idKey]}>">
+                                            </case>
+
+                                            <case value="a_m">
+                                                <a href="__MODULE__/<{$iOperation.module_name}>&<{$v.idKey}>=<{$iList.$v[idKey]}>">
                                             </case>
 
                                             <default />
-                                                <a href="__CONTROLLER__/<{$kOperation}>&<{$v.idKey}>=<{$iList.$v[idKey]}>&ret=<{$v.self}>"><{$Think.lang.$kOperation}></a>
+                                                <a href="__CONTROLLER__/<{$kOperation}>&<{$v.idKey}>=<{$iList.$v[idKey]}>&ret=<{$v.self}>">
 
                                         </switch>
+                                            <present name="iOperation.name">
+                                            <{$Think.lang.$iOperation[name]}>
+                                            <else />
+                                            <{$Think.lang.$kOperation}>
+                                            </present>
+                                        </a>
                                         <{$iOperation.link}>
                                     </foreach>
                                 </td>
                             </tr>
 
+                            <!-- 数据详情 -->
                             <notempty name="v.detail">
 
                                 <!--表格详情页-->

@@ -45,7 +45,6 @@ class AdminInfoController extends BaseController
 
 		//显示
 		end:
-		$this->v['alert'] = get_error();
 		$this->display();//显示页面
 
 	}

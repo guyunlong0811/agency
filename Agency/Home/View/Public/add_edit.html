@@ -14,30 +14,56 @@
         <foreach name="v.form_list" item="iFormList" key="kFormList">
 
             <notempty name="iFormList.w">
+
                 $("#<{$kFormList}>").addClass('input-<{$iFormList.w}>');
+
             </notempty>
 
             <notempty name="iFormList.h">
+
                 $("#<{$kFormList}>").addClass('input-<{$iFormList.h}>');
+
             </notempty>
-
-
 
             <switch name="iFormList.type">
 
                 <case value="radio">
 
-                    $("#<{$kFormList}>_<{$iFormList.value}>").attr('checked', true);
+                    <present name="v.row.$kFormList">
+
+                        $("#<{$kFormList}>_<{$v.row.$kFormList}>").attr('checked', true);
+
+                    </present>
+
+                    <notempty name="iFormList.value">
+
+                        $("#<{$kFormList}>_<{$iFormList.value}>").attr('checked', true);
+
+                    </notempty>
+
+
 
                 </case>
 
                 <default />
 
                     <eq name="iFormList.disabled" value="1">
+
                         $("#<{$kFormList}>").attr('disabled', true);
+
                     </eq>
 
-                    $("#<{$kFormList}>").val('<{$iFormList.value}>');
+                    <present name="v.row.$kFormList">
+
+                        $("#<{$kFormList}>").val('<{$v.row.$kFormList}>');
+
+                    </present>
+
+                    <notempty name="iFormList.value">
+
+                        $("#<{$kFormList}>").val('<{$iFormList.value}>');
+
+                    </notempty>
 
             </switch>
 
@@ -55,24 +81,30 @@
                         <switch name="kFormListCheck">
 
                             <case value="require">
+
                                 if ($("#<{$kFormList}>").val() == '') {
                                     alert('<{$Think.lang.$iFormListCheck[alert]}>');
                                     return false;
                                 }
+
                             </case>
 
                             <case value="length">
+
                                 if ($("#<{$kFormList}>").val().length != 0 && $("#<{$kFormList}>").val().length <{$iFormListCheck.compare}>) {
                                     alert('<{$Think.lang.$iFormListCheck[alert]}>');
                                     return false;
                                 }
+
                             </case>
 
                             <case value="value">
-                            if ($("#<{$kFormList}>").val() <{$iFormListCheck.compare}>) {
-                                alert('<{$Think.lang.$iFormListCheck[alert]}>');
-                                return false;
-                            }
+
+                                if ($("#<{$kFormList}>").val() <{$iFormListCheck.compare}>) {
+                                    alert('<{$Think.lang.$iFormListCheck[alert]}>');
+                                    return false;
+                                }
+
                             </case>
 
                         </switch>
@@ -86,6 +118,7 @@
             return true;
 
         });
+
     });
 </script>
 
@@ -102,7 +135,7 @@
             <div class="portlet box blue">
 
                 <div class="portlet-title">
-                    <div class="caption"><i class="fa <eq name="v.action" value="add">fa-plus<else />fa-edit</eq>"></i><{$Think.lang.$v[title]}></div>
+                    <div class="caption"><i class="fa fa-<{$v.fa}>"></i><{$Think.lang.$v[title]}></div>
                 </div>
 
                 <div class="portlet-body form">
@@ -121,42 +154,57 @@
 
                                     <label class="col-md-3 control-label"><{$Think.lang.$iFormList[left]}></label>
 
-                                        <switch name="iFormList.type">
+                                    <switch name="iFormList.type">
 
-                                            <case value="radio">
-                                                <div class="col-md-9 radio-list">
-                                            </case>
+                                        <case value="radio">
 
-                                            <default />
-                                                <div class="col-md-9">
+                                            <div class="col-md-9 radio-list">
 
-                                        </switch>
+                                        </case>
+
+                                        <default />
+
+                                            <div class="col-md-9">
+
+                                    </switch>
 
                                         <switch name="iFormList.type">
 
                                             <case value="text">
-                                                <input type="text" class="form-control" id="<{$kFormList}>" name="<{$kFormList}>"/>
+                                                <input type="text" class="form-control inline" id="<{$kFormList}>" name="<{$kFormList}>"/>
                                             </case>
 
                                             <case value="password">
+
                                                 <input type="password" class="form-control" id="<{$kFormList}>" name="<{$kFormList}>"/>
+
                                             </case>
 
                                             <case value="textarea">
+
                                                 <textarea class="form-control" rows="<{$iFormList.rows}>" cols="<{$iFormList.cols}>" id="<{$kFormList}>" name="<{$kFormList}>"></textarea>
+
                                             </case>
 
                                             <case value="radio">
 
                                                 <foreach name="iFormList.list" item="iFormListList" key="kFormListList">
+
                                                     <label class="radio-inline">
-                                                        <input type="radio" id="<{$kFormList}>_<{$kFormListList}>" name="<{$kFormList}>" value="<{$kFormListList}>" disabled="<{$iFormListList.disabled}>" /><{$Think.lang.$iFormListList[name]}>
+                                                        <input type="radio" id="<{$kFormList}>_<{$kFormListList}>" name="<{$kFormList}>" value="<{$kFormListList}>" <{$iFormListList.disabled}> /><{$Think.lang.$iFormListList[name]}>
                                                     </label>
+
                                                 </foreach>
 
                                             </case>
 
                                         </switch>
+
+                                        <present name="iFormList.check.require">
+
+                                            <span style="color: red; padding-left: 5px;">*</span>
+
+                                        </present>
 
                                         <span class="help-block"><{$Think.lang.$iFormList[button]}></span>
 
@@ -169,15 +217,8 @@
                         </div>
 
                         <div class="form-actions">
-
-                            <eq name="v.action" value="add">
-                                <button type="submit" class="btn blue"><i class="fa fa-plus"></i>&nbsp;<{$Think.lang.add}></button>
-                            <else />
-                                <button type="submit" class="btn blue"><i class="fa fa-edit"></i>&nbsp;<{$Think.lang.save}></button>
-                            </eq>
-
+                            <button type="submit" class="btn blue"><i class="fa fa-<{$v.fa}>"></i>&nbsp;<{$Think.lang.$v[action]}></button>
                             <button type="button" class="btn" onclick="javascript:window.location.href='<{$v.ret}>'";"><i class="fa fa-undo"></i>&nbsp;<{$Think.lang.return}></button>
-
                         </div>
 
                     </form>

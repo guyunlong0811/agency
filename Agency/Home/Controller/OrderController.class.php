@@ -76,7 +76,6 @@ class OrderController extends BInitController
 			$this->vList = $list;
 		}
 		//显示
-		$this->v['alert'] = get_error();
 		$this->display();//显示页面
 	}
 	
@@ -118,7 +117,6 @@ class OrderController extends BInitController
 		$row['price'] = sprintf("%01.2f", $row['price'] / 100);
 		$row['cost'] = sprintf("%01.2f", $row['cost'] / 100);
 		$this->vRow = $row;
-		$this->v['alert'] = get_error();
 		$this->display();//显示页面
 	}
 
@@ -143,7 +141,6 @@ class OrderController extends BInitController
 		//显示
 		end:
 		$this->vShipped = time2format(null, 2);
-		$this->v['alert'] = get_error();
 		$this->display();//显示页面
 	}
 
