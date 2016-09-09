@@ -11,7 +11,7 @@
  Target Server Version : 50712
  File Encoding         : utf-8
 
- Date: 09/07/2016 18:45:07 PM
+ Date: 09/09/2016 18:07:18 PM
 */
 
 SET NAMES utf8;
@@ -38,7 +38,7 @@ CREATE TABLE `admin` (
 --  Records of `admin`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin` VALUES ('1', 'admin', 'Admin', 'e10adc3949ba59abbe56e057f20f883e', '1472195276', '', '1473219717', '::1', '1'), ('2', 'eric', '暴暴', 'e10adc3949ba59abbe56e057f20f883e', '1472199287', '', null, null, '1');
+INSERT INTO `admin` VALUES ('1', 'admin', 'Admin', 'e10adc3949ba59abbe56e057f20f883e', '1472195276', '', '1473403941', '::1', '1'), ('2', 'eric', '暴暴', 'e10adc3949ba59abbe56e057f20f883e', '1472199287', '', null, null, '1');
 COMMIT;
 
 -- ----------------------------
@@ -147,6 +147,7 @@ CREATE TABLE `user` (
   `wechat` char(64) DEFAULT NULL COMMENT '微信号',
   `email` varchar(128) DEFAULT NULL COMMENT '电子邮箱',
   `gender` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT '性别(1:男;0:女;2:未知;)',
+  `age` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '年龄',
   `last_purchase_time` int(10) unsigned DEFAULT NULL COMMENT '最近一次购买时间',
   `total_purchase` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '总花费',
   `total_order_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '总订单数量',
@@ -160,7 +161,7 @@ CREATE TABLE `user` (
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', '13764426340', '顾云龙', '暴暴', 'guyunlong0811', 'guyunlong0811@126.com', '1', '1471602801', '200000', '1', '1471513434', 'test', '0'), ('2', '18019116118', '赵梦姣', null, null, 'mengjiao871025@126.com', '0', null, '0', '0', '1471513434', 'aaa', '0'), ('3', '18019116118', '顾歆妤', '肉包', null, null, '0', null, '0', '0', '1473234218', null, '0');
+INSERT INTO `user` VALUES ('1', '13764426340', '顾云龙', '暴暴', 'guyunlong0811', 'guyunlong0811@126.com', '1', '27', '1471602801', '200000', '1', '1471513434', 'test', '0'), ('2', '18019116118', '赵梦姣', null, null, 'mengjiao871025@126.com', '0', '0', null, '0', '0', '1471513434', 'aaa', '0'), ('3', '18019116118', '顾歆妤', '肉包', 'Ivy', 'Ivy.gu@126.com', '0', '0', null, '0', '0', '1473234218', null, '1');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

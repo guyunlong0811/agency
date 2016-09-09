@@ -6,12 +6,6 @@ use Think\Controller;
 class AdminInfoController extends BaseController
 {
 
-	public function _initialize()
-	{
-		parent::_initialize();
-		$this->v['icon'] = 'user';
-	}
-
 	//编辑管理员信息
 	public function index()
 	{

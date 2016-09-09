@@ -10,12 +10,6 @@ class AdminController extends BaseController
 		'0' => 'status_banned',
 	);
 
-	public function _initialize()
-	{
-		parent::_initialize();
-		$this->v['icon'] = 'user';
-	}
-
 	//显示列表
 	public function index()
 	{
@@ -26,7 +20,7 @@ class AdminController extends BaseController
 		$list = $model->page($this->pg . ',' . $page->listRows)->order($order)->select();
 
 		//显示
-		$this->v['title'] = 'admin_manager';
+		$this->v['title'] = 'admin_module';
 		$this->v['idKey'] = 'id';
 		$this->v['isPage'] = '1';
 		$this->v['list'] = $list;
@@ -41,8 +35,8 @@ class AdminController extends BaseController
 			'admin_status' => array('field' => 'status', 'type' => 'select', 'list' => self::$status, 'w' => 'small', 'h' => 'sm', 'action' => 'status'),
 		);
 		$this->v['operation'] = array(
-			'edit' => array('type' => 'a_c', 'link' => '|'),
-			'permission' => array('type' => 'a_c', 'link' => ''),
+			'edit' => array('type' => 'a_c', 'fa' => 'edit', 'color' => 'yellow', 'link' => ' | '),
+			'permission' => array('type' => 'a_c', 'fa' => 'lock', 'color' => 'yellow', 'link' => ''),
 		);
 		$this->adminDisplay('Public/list');//显示页面
 	}
@@ -105,7 +99,7 @@ class AdminController extends BaseController
 			'username' => array(
 				'type' => 'text',
 				'left' => 'admin_account',
-				'button' => 'username_require',
+				'tip' => 'username_require',
 				'w' => 'medium',//xsmall | small | medium | large | xlarge | ''
 				'value' => '',
 				'check' => array(
@@ -121,7 +115,7 @@ class AdminController extends BaseController
 			'nickname' => array(
 				'type' => 'text',
 				'left' => 'admin_nickname',
-				'button' => 'nickname_require',
+				'tip' => 'nickname_require',
 				'w' => 'medium',
 				'value' => '',
 				'check' => array(
@@ -133,7 +127,7 @@ class AdminController extends BaseController
 			'password' => array(
 				'type' => 'password',
 				'left' => 'admin_pwd',
-				'button' => 'pwd_input',
+				'tip' => 'pwd_input',
 				'w' => 'medium',
 				'value' => '',
 				'check' => array(
@@ -149,7 +143,7 @@ class AdminController extends BaseController
 			'repassword' => array(
 				'type' => 'password',
 				'left' => 'admin_repwd',
-				'button' => 'pwd_confirm',
+				'tip' => 'pwd_confirm',
 				'w' => 'medium',
 				'value' => '',
 				'check' => array(
@@ -162,7 +156,7 @@ class AdminController extends BaseController
 			'ip_limit' => array(
 				'type' => 'textarea',
 				'left' => 'ip_limit',
-				'button' => 'ip_limit_input',
+				'tip' => 'ip_limit_input',
 				'cols' => '',
 				'rows' => '3',
 				'w' => '',
@@ -216,7 +210,7 @@ class AdminController extends BaseController
 		$this->v['form'] = 'main';
 		$this->v['title'] = 'admin_edit';
 		$this->v['method'] = 'post';
-		$this->v['action'] = 'edit';
+		$this->v['action'] = 'save';
 		$this->v['fa'] = 'edit';
 		$this->v['hKey'] = 'id';
 		$this->v['hVal'] = $id;
@@ -224,7 +218,7 @@ class AdminController extends BaseController
 			'username' => array(
 				'type' => 'text',
 				'left' => 'admin_account',
-				'button' => 'username_require',
+				'tip' => 'username_require',
 				'w' => 'medium',//xsmall | small | medium | large | xlarge | ''
 				'value' => $row['username'],
 				'check' => array(
@@ -241,7 +235,7 @@ class AdminController extends BaseController
 			'nickname' => array(
 				'type' => 'text',
 				'left' => 'admin_nickname',
-				'button' => 'nickname_require',
+				'tip' => 'nickname_require',
 				'w' => 'medium',
 				'value' => $row['nickname'],
 				'check' => array(
@@ -253,7 +247,7 @@ class AdminController extends BaseController
 			'password' => array(
 				'type' => 'password',
 				'left' => 'admin_pwd',
-				'button' => 'pwd_input',
+				'tip' => 'pwd_input',
 				'w' => 'medium',
 				'value' => '',
 				'check' => array(
@@ -266,7 +260,7 @@ class AdminController extends BaseController
 			'repassword' => array(
 				'type' => 'password',
 				'left' => 'admin_repwd',
-				'button' => 'pwd_confirm',
+				'tip' => 'pwd_confirm',
 				'w' => 'medium',
 				'value' => '',
 				'check' => array(
@@ -279,7 +273,7 @@ class AdminController extends BaseController
 			'ip_limit' => array(
 				'type' => 'textarea',
 				'left' => 'ip_limit',
-				'button' => 'ip_limit_input',
+				'tip' => 'ip_limit_input',
 				'cols' => '',
 				'rows' => '3',
 				'w' => '',

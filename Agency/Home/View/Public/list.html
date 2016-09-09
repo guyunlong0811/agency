@@ -54,7 +54,7 @@
                     <form action="" method="<{$v.method}>" id="<{$v.form}>" role="form">
 
                         <!--隐藏当前页面s-->
-                        <input type="hidden" name="s" value="<{$s}>">
+                        <input type="hidden" name="s" value="<{$v.s}>">
 
                         <div class="row">
 
@@ -140,7 +140,10 @@
                 <!--标题右侧链接-->
                 <notempty name="v.tools">
                     <div class="tools">
-                        <a href="__CONTROLLER__/<{$v.tools.action}>&ret=<{$v.self}>" style="color:whitesmoke;"><{$v.tools.title}></a>
+                        <a class="btn btn-xs blue" style="margin-top: -8px;" href="__CONTROLLER__/<{$v.tools.action}>&ret=<{$v.self}>">
+                            <i class="fa fa-plus"></i>
+                            <{$v.tools.title}>
+                        </a>
                     </div>
                 </notempty>
             </div>
@@ -243,24 +246,40 @@
                                         <switch name="iOperation.type">
 
                                             <case value="detail">
-                                                <a href="javascript:;" id="click_detail_<{$iList.$v[idKey]}>">
+
+                                                <a class="btn btn-xs blue" href="javascript:;" id="click_detail_<{$iList.$v[idKey]}>">
+                                                    <i class="fa fa-chevron-down"></i>
+
                                             </case>
 
                                             <case value="a_m">
-                                                <a href="__MODULE__/<{$iOperation.module_name}>&<{$v.idKey}>=<{$iList.$v[idKey]}>">
+
+                                                <a class="btn btn-xs dark" href="__MODULE__/<{$iOperation.module_name}>&<{$v.idKey}>=<{$iList.$v[idKey]}>">
+                                                    <i class="fa fa-link"></i>
+
                                             </case>
 
                                             <default />
-                                                <a href="__CONTROLLER__/<{$kOperation}>&<{$v.idKey}>=<{$iList.$v[idKey]}>&ret=<{$v.self}>">
+
+                                                <a class="btn btn-xs <{$iOperation.color}>" href="__CONTROLLER__/<{$kOperation}>&<{$v.idKey}>=<{$iList.$v[idKey]}>&ret=<{$v.self}>">
+                                                    <i class="fa fa-<{$iOperation.fa}>"></i>
 
                                         </switch>
+
                                             <present name="iOperation.name">
+
                                             <{$Think.lang.$iOperation[name]}>
+
                                             <else />
+
                                             <{$Think.lang.$kOperation}>
+
                                             </present>
+
                                         </a>
+
                                         <{$iOperation.link}>
+
                                     </foreach>
                                 </td>
                             </tr>
@@ -291,11 +310,11 @@
                                     $(document).ready(function () {
                                         $("#click_detail_<{$iList.$v[idKey]}>").click(function () {
                                             if ($("#switch_detail_<{$iList.$v[idKey]}>").val() == '0') {
-                                                $("#click_detail_<{$iList.$v[idKey]}>").html('<{$Think.lang.close}>');
+                                                $("#click_detail_<{$iList.$v[idKey]}>").html('<i class="fa fa-chevron-up"></i> <{$Think.lang.close}>');
                                                 $("#switch_detail_<{$iList.$v[idKey]}>").val('1');
                                                 $("#detail_<{$iList.$v[idKey]}>").show('fast');
                                             } else {
-                                                $("#click_detail_<{$iList.$v[idKey]}>").html('<{$Think.lang.detail}>');
+                                                $("#click_detail_<{$iList.$v[idKey]}>").html('<i class="fa fa-chevron-down"></i> <{$Think.lang.detail}>');
                                                 $("#switch_detail_<{$iList.$v[idKey]}>").val('0');
                                                 $("#detail_<{$iList.$v[idKey]}>").hide('fast');
                                             }
@@ -314,7 +333,7 @@
                 </table>
 
                 <eq name="v.isPage" value="1">
-                    <{$vPageBar}>
+                    <{$v.pageBar}>
                 </eq>
 
             </div>

@@ -6,8 +6,8 @@ return array(
 
 	//--左侧列表------------------
 
-	'admin_model' => '管理员模块',
-	'admin_manager' => '后台管理',
+	'admin_module' => '后台管理',
+	'admin_manage' => '管理员模块',
 	'admin_modify' => '修改个人信息',
 	'admin_log' => '管理员日志',
 
@@ -22,6 +22,15 @@ return array(
 	"admin_edit" => '修改管理员信息',
 
 
+
+
+	'item_module' => '商品管理',
+
+	'category_manage' => '分类管理',
+	'category_index' => '查看分类信息',
+	'category_add' => '新增分类',
+	'category_edit' => '修改分类信息',
+	'category_delete' => '删除分类',
 
 	'user_module' => '客户管理',
 	'user_manage' => '客户信息管理',
@@ -56,6 +65,7 @@ return array(
 	'user_total_order_count' => '客户总单数',
 	'user_profile' => '客户描述',
 	'user_invite_uid' => '客户邀请人',
+	'user_age' => '客户年龄',
 
 	'user_phone_input' => '请输入客户手机号码',
 	'user_wechat_input' => '请输入客户微信号码',
@@ -65,10 +75,18 @@ return array(
 	'user_profile_input' => '请输入客户描述',
 	'user_gender_select' => '请选择客户性别',
 	'user_invite_uid_input' => '请输入客户邀请人UID',
+	'user_age_input' => '请输入客户年龄',
 
 	'male' => '男',
 	'female' => '女',
 	'unknown' => '未知',
+
+	//分类管理
+	'category_name' => '分类名称',
+	'category_name_input' => '请输入分类名称',
+	'category_father' => '上级分类',
+	'category_father_select' => '请选择上级分类',
+	'category_no_father' => '无上级',
 
 	'order_id' => '订单号',
 	'order_user' => '订单客户',
@@ -223,6 +241,7 @@ return array(
 	'copy' => '复制',
 	'required' => '必填',
 	'optional' => '选填',
+	'remove' => '删除',
 
 
 	'select_all' => '全选',

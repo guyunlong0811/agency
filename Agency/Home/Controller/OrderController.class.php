@@ -15,8 +15,6 @@ class OrderController extends BInitController
 	public function _initialize()
 	{
 		parent::_initialize();
-		$this->v['icon'] = 'group';
-		$this->vTitle = 'order_manage';
 		$this->vStatus = self::$status;
 		$this->selectDateStartEnd();
 	}

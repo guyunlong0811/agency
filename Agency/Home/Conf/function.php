@@ -1,13 +1,14 @@
 <?php
 return array(
 	'FUNCTION' => array(
-		array(
-			'name' => 'admin_manager',
+
+		'admin_module' => array(
+
 			'icon' => 'user',
 			'list' => array(
-				array(
-					'name' => 'admin_model',
-					'controller' => 'Admin',
+
+				'Admin' => array(
+					'name' => 'admin_manage',
 					'permission' => array(
 						array('action' => 'index', 'name' => 'admin_index',),
 						array('action' => 'status', 'name' => 'admin_change_status',),
@@ -17,16 +18,38 @@ return array(
 						array('action' => 'server', 'name' => 'admin_server',),
 					),
 				),
+
 			),
+
 		),
 
-		array(
+		'item_module' => array(
+
+			'icon' => 'shopping-cart',
+			'list' => array(
+
+				'Category' => array(
+					'name' => 'category_manage',
+					'permission' => array(
+						array('action' => 'index', 'name' => 'category_index',),
+						array('action' => 'add', 'name' => 'category_add',),
+						array('action' => 'edit', 'name' => 'category_edit',),
+						array('action' => 'delete', 'name' => 'category_delete',),
+					),
+				),
+
+			),
+
+		),
+
+		'user_module' => array(
+
 			'name' => 'user_module',
 			'icon' => 'group',
 			'list' => array(
-				array(
+
+				'User' => array(
 					'name' => 'user_manage',
-					'controller' => 'User',
 					'permission' => array(
 						array('action' => 'index', 'name' => 'user_index',),
 						array('action' => 'add', 'name' => 'user_add',),
@@ -35,16 +58,18 @@ return array(
 					),
 				),
 
-				array(
+				'Order' => array(
 					'name' => 'order_manage',
-					'controller' => 'Order',
 					'permission' => array(
 						array('action' => 'index', 'name' => 'order_index',),
 						array('action' => 'detail', 'name' => 'order_detail',),
 					),
 				),
+
 			),
+
 		),
 
 	),
+
 );

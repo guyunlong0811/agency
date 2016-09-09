@@ -41,8 +41,6 @@
 
                     </notempty>
 
-
-
                 </case>
 
                 <default />
@@ -101,6 +99,16 @@
                             <case value="value">
 
                                 if ($("#<{$kFormList}>").val() <{$iFormListCheck.compare}>) {
+                                    alert('<{$Think.lang.$iFormListCheck[alert]}>');
+                                    return false;
+                                }
+
+                            </case>
+
+                            <case value="regular">
+
+                                var reg = <{$iFormListCheck.compare}>;
+                                if (!reg.test($("#<{$kFormList}>").val())) {
                                     alert('<{$Think.lang.$iFormListCheck[alert]}>');
                                     return false;
                                 }
@@ -171,12 +179,12 @@
                                         <switch name="iFormList.type">
 
                                             <case value="text">
-                                                <input type="text" class="form-control inline" id="<{$kFormList}>" name="<{$kFormList}>"/>
+                                                <input type="text" class="form-control inline" id="<{$kFormList}>" name="<{$kFormList}>" />
                                             </case>
 
                                             <case value="password">
 
-                                                <input type="password" class="form-control" id="<{$kFormList}>" name="<{$kFormList}>"/>
+                                                <input type="password" class="form-control" id="<{$kFormList}>" name="<{$kFormList}>" />
 
                                             </case>
 
@@ -198,6 +206,22 @@
 
                                             </case>
 
+                                            <case value="category">
+
+                                                <select class="form-control" id="<{$kFormList}>" name="<{$kFormList}>">
+
+                                                    <option value="0"><{$iCategory.category_no_father}></option>
+
+                                                    <foreach name="v.category" item="iCategory" key="kCategory">
+
+                                                        <option value="<{$iCategory.id}>"><{$iCategory.name}></option>
+
+                                                    </foreach>
+
+                                                </select>
+
+                                            </case>
+
                                         </switch>
 
                                         <present name="iFormList.check.require">
@@ -206,7 +230,7 @@
 
                                         </present>
 
-                                        <span class="help-block"><{$Think.lang.$iFormList[button]}></span>
+                                        <span class="help-block"><{$Think.lang.$iFormList[tip]}></span>
 
                                     </div>
 

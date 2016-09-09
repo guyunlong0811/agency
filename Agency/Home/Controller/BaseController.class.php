@@ -47,42 +47,36 @@ class BaseController extends Controller
 		}
 
 		//模块
-		$this->vController = CONTROLLER_NAME;
+		$this->v['controller'] = CONTROLLER_NAME;
 
 		//昵称
-		$this->vNickname = $admin['nickname'];
-		$this->vApp = APP_STATUS;
+		$this->v['nickname'] = $admin['nickname'];
+		$this->v['app'] = APP_STATUS;
 
 		//功能
-		$allFunction = get_config('Function');
-		foreach ($allFunction as $key1 => $value1) {
-
-			//将menu显示成特定语言
-			$allFunction[$key1]['name'] = L($value1['name']);
-
-			//将子menu显示成特定语言
-			foreach ($allFunction[$key1]['list'] as $key2 => $value2) {
-
-				$allFunction[$key1]['list'][$key2]['name'] = L($value2['name']);
-				foreach ($value2['permission'] as $key3 => $value3) {
-					$allFunction[$key1]['list'][$key2]['permission'][$key3]['name'] = L($value3['name']);
+		$this->v['function'] = get_config('Function');
+		$this->v['icon'] = 'home';
+		foreach ($this->v['function'] as $key => $value) {
+			foreach ($value['list'] as $k => $val) {
+				if ($this->v['controller'] == $k) {
+					$this->v['icon'] = $value['icon'];
+					break;
 				}
-
 			}
-
+			if ($this->v['icon'] != 'home') {
+				break;
+			}
 		}
 
-		$this->vFunction = $allFunction;
-
-		//页码
-		$this->s = '/' . MODULE_NAME . '/' . CONTROLLER_NAME . '/' . ACTION_NAME;
+		//客户端信息
+		$this->v['s'] = '/' . MODULE_NAME . '/' . CONTROLLER_NAME . '/' . ACTION_NAME;
 		$this->v['get'] = $_GET;
 		$this->v['post'] = $_POST;
-		if(isset($this->v['post']['ret'])){
+		if (isset($this->v['post']['ret'])) {
 			$this->v['ret'] = $this->v['post']['ret'];
-		}else if(isset($this->v['get']['ret'])){
+		} else if (isset($this->v['get']['ret'])) {
 			$this->v['ret'] = $this->v['get']['ret'];
-		}else{
+		} else {
 			$this->v['ret'] = __CONTROLLER__;
 		}
 		$this->v['self'] = __SELF__ != '' ? urlencode(__SELF__) : '###';
@@ -110,7 +104,7 @@ class BaseController extends Controller
 		$page->setConfig('next', '>');
 		$page->setConfig('last', '>>');
 		$page->setConfig('theme', "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");//rows %NOW_PAGE%/%TOTAL_PAGE%pages
-		$this->vPageBar = $page->show();
+		$this->v['pageBar'] = $page->show();
 		return $page;
 
 	}
@@ -125,7 +119,7 @@ class BaseController extends Controller
 		$page->setConfig('next', '>');
 		$page->setConfig('last', '>>');
 		$page->setConfig('theme', "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% total:%TOTAL_ROW%");//rows %NOW_PAGE%/%TOTAL_PAGE%pages
-		$this->vPageBar = $page->show();
+		$this->v['pageBar'] = $page->show();
 		return $page;
 
 	}
@@ -195,17 +189,18 @@ class BaseController extends Controller
 	}
 
 	//获取客户显示信息
-	protected function getUserDisplayName($info){
+	protected function getUserDisplayName($info)
+	{
 		$user = $info['uid'];
-		if(!empty($info['nickname'])){
+		if (!empty($info['nickname'])) {
 			$user = $info['nickname'];
-		}else if(!empty($info['firstname']) && !empty($info['lastname'])){
+		} else if (!empty($info['firstname']) && !empty($info['lastname'])) {
 			$user = $info['lastname'] . $info['firstname'];
-		}else if(!empty($info['wechat'])){
+		} else if (!empty($info['wechat'])) {
 			$user = $info['wechat'];
-		}else if(!empty($info['email'])){
+		} else if (!empty($info['email'])) {
 			$user = $info['email'];
-		}else if(!empty($info['phone'])){
+		} else if (!empty($info['phone'])) {
 			$user = $info['phone'];
 		}
 		return $user;

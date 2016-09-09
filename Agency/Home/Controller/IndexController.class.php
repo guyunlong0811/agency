@@ -12,15 +12,9 @@ class IndexController extends BaseController
 		-1 => 'order_cancelled',
 	);
 
-	public function _initialize()
-	{
-		parent::_initialize();
-		$this->v['icon'] = 'home';
-	}
-
 	public function index()
 	{
-		$this->display();//显示页面
+		$this->adminDisplay(null);//显示页面
 	}
 
 	public function show_list()

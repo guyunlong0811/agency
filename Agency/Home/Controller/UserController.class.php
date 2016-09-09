@@ -6,12 +6,6 @@ use Think\Controller;
 class UserController extends BaseController
 {
 
-	public function _initialize()
-	{
-		parent::_initialize();
-		$this->v['icon'] = 'group';
-	}
-
 	public function index()
 	{
 		$list = array();
@@ -38,13 +32,13 @@ class UserController extends BaseController
 					foreach ($list as $key => $value) {
 						switch ($value['gender']) {
 							case '1':
-								$list[$key]['gender'] = L('male');
+								$list[$key]['nickname'] .= '(♂)';
 								break;
 							case '0':
-								$list[$key]['gender'] = L('female');
+								$list[$key]['nickname'] .= '(♀)';
 								break;
 							case '2':
-								$list[$key]['gender'] = L('unknown');
+								$list[$key]['nickname'] .= '(-)';
 								break;
 						}
 						$list[$key]['ctime'] = time2format($value['ctime']);
@@ -120,7 +114,6 @@ class UserController extends BaseController
 		//表格数据
 		$this->v['table'] = array(
 			'uid' => array('field' => 'uid',),
-			'user_name' => array('field' => 'real_name',),
 			'user_nickname' => array('field' => 'nickname',),
 			'user_phone' => array('field' => 'phone',),
 			'user_gender' => array('field' => 'gender',),
@@ -129,14 +122,15 @@ class UserController extends BaseController
 
 		//表格操作
 		$this->v['operation'] = array(
-			'detail' => array('type' => 'detail', 'link' => '|'),
-			'edit' => array('type' => 'a_c', 'link' => '|'),
-			'order' => array('type' => 'a_c', 'name' => 'user_order', 'link' => '|'),
+			'detail' => array('type' => 'detail', 'link' => ' | '),
+			'edit' => array('type' => 'a_c', 'fa' => 'edit', 'color' => 'yellow', 'link' => ' | '),
+			'order' => array('type' => 'a_c', 'name' => 'user_order', 'fa' => 'cny', 'color' => 'green', 'link' => ' | '),
 			'order_module' => array('type' => 'a_m', 'module_name' => 'Order', 'link' => ''),
 		);
 
 		//详细页配置
 		$this->v['detail'] = array(
+			'user_name' => array('field' => 'real_name',),
 			'user_ctime' => array('field' => 'ctime',),
 			'user_email' => array('field' => 'email',),
 			'user_total_purchase' => array('field' => 'total_purchase',),
@@ -158,6 +152,7 @@ class UserController extends BaseController
 			$add['wechat'] = I('post.wechat') ? I('post.wechat') : null;
 			$add['email'] = I('post.email') ? I('post.email') : null;
 			$add['gender'] = I('post.gender') >= 0 ? I('post.gender') : 2;
+			$add['age'] = I('post.age') >= 0 ? I('post.age') : 0;
 			$add['last_purchase_time'] = null;
 			$add['total_purchase'] = 0;
 			$add['total_order_count'] = 0;
@@ -177,10 +172,22 @@ class UserController extends BaseController
 		$this->v['action'] = 'add';
 		$this->v['fa'] = 'plus';
 		$this->v['form_list'] = array(
+			'nickname' => array(
+				'type' => 'text',
+				'left' => 'user_nickname',
+				'tip' => 'user_nickname_input',
+				'w' => 'medium',
+				'value' => '',
+				'check' => array(
+					'require' => array(
+						'alert' => 'user_phone_input',
+					),
+				),
+			),
 			'phone' => array(
 				'type' => 'text',
 				'left' => 'user_phone',
-				'button' => 'user_phone_input',
+				'tip' => 'user_phone_input',
 				'w' => 'medium',
 				'value' => '',
 				'check' => array(
@@ -192,35 +199,28 @@ class UserController extends BaseController
 			'real_name' => array(
 				'type' => 'text',
 				'left' => 'user_name',
-				'button' => 'user_name_input',
+				'tip' => 'user_name_input',
 				'w' => 'medium',//xsmall | small | medium | large | xlarge | ''
-				'value' => '',
-			),
-			'nickname' => array(
-				'type' => 'text',
-				'left' => 'user_nickname',
-				'button' => 'user_nickname_input',
-				'w' => 'medium',
 				'value' => '',
 			),
 			'wechat' => array(
 				'type' => 'text',
 				'left' => 'user_wechat',
-				'button' => 'user_wechat_input',
+				'tip' => 'user_wechat_input',
 				'w' => 'medium',
 				'value' => '',
 			),
 			'email' => array(
 				'type' => 'text',
 				'left' => 'user_email',
-				'button' => 'user_email_input',
+				'tip' => 'user_email_input',
 				'w' => 'medium',
 				'value' => '',
 			),
 			'gender' => array(
 				'type' => 'radio',
 				'left' => 'user_gender',
-				'button' => 'user_gender_select',
+				'tip' => 'user_gender_select',
 				'size' => '',
 				'value' => '2',
 				'list' => array(
@@ -229,17 +229,36 @@ class UserController extends BaseController
 					'2' => array('name' => 'unknown', 'disabled' => ''),
 				),
 			),
+			'age' => array(
+				'type' => 'text',
+				'left' => 'user_age',
+				'tip' => 'user_age_input',
+				'w' => 'small',
+				'value' => '0',
+				'check' => array(
+					'regular' => array(
+						'compare' => get_js_regular('age'),
+						'alert' => 'user_age_input',
+					),
+				),
+			),
 			'invite_uid' => array(
 				'type' => 'text',
 				'left' => 'user_invite_uid',
-				'button' => 'user_invite_uid_input',
+				'tip' => 'user_invite_uid_input',
 				'w' => 'medium',
 				'value' => '',
+				'check' => array(
+					'regular' => array(
+						'compare' => get_js_regular('num'),
+						'alert' => 'user_invite_uid_input',
+					),
+				),
 			),
 			'profile' => array(
 				'type' => 'textarea',
 				'left' => 'user_profile',
-				'button' => 'user_profile_input',
+				'tip' => 'user_profile_input',
 				'cols' => '',
 				'rows' => '2',
 				'w' => '',
@@ -262,6 +281,8 @@ class UserController extends BaseController
 			$save['lastname'] = I('post.lastname') ? I('post.lastname') : null;
 			$save['email'] = I('post.email') ? I('post.email') : null;
 			$save['gender'] = I('post.gender');
+			$save['age'] = I('post.age');
+			$save['invite_uid'] = I('post.invite_uid') ? I('post.invite_uid') : 0;
 			$save['profile'] = I('post.profile') ? I('post.profile') : null;
 			if (false === D('User')->UpdateData($save, $where)) {
 				C('G_ERROR', 'fail');
@@ -275,21 +296,35 @@ class UserController extends BaseController
 		$this->v['form'] = 'main';
 		$this->v['title'] = 'user_edit';
 		$this->v['method'] = 'post';
-		$this->v['action'] = 'edit';
+		$this->v['action'] = 'save';
 		$this->v['fa'] = 'edit';
+		$this->v['hKey'] = 'uid';
+		$this->v['hVal'] = $uid;
 		$this->v['form_list'] = array(
-			'uid' => array(
+			'uid_view' => array(
 				'type' => 'text',
 				'left' => 'uid',
-				'button' => 'uid',
+				'tip' => 'uid',
+				'w' => 'medium',
+				'value' => $uid,
+				'disabled' => '1',
+			),
+			'nickname' => array(
+				'type' => 'text',
+				'left' => 'user_nickname',
+				'tip' => 'user_nickname_input',
 				'w' => 'medium',
 				'value' => '',
-				'disabled' => '1',
+				'check' => array(
+					'require' => array(
+						'alert' => 'user_phone_input',
+					),
+				),
 			),
 			'phone' => array(
 				'type' => 'text',
 				'left' => 'user_phone',
-				'button' => 'user_phone_input',
+				'tip' => 'user_phone_input',
 				'w' => 'medium',
 				'value' => '',
 				'check' => array(
@@ -301,35 +336,28 @@ class UserController extends BaseController
 			'real_name' => array(
 				'type' => 'text',
 				'left' => 'user_name',
-				'button' => 'user_name_input',
+				'tip' => 'user_name_input',
 				'w' => 'medium',//xsmall | small | medium | large | xlarge | ''
-				'value' => '',
-			),
-			'nickname' => array(
-				'type' => 'text',
-				'left' => 'user_nickname',
-				'button' => 'user_nickname_input',
-				'w' => 'medium',
 				'value' => '',
 			),
 			'wechat' => array(
 				'type' => 'text',
 				'left' => 'user_wechat',
-				'button' => 'user_wechat_input',
+				'tip' => 'user_wechat_input',
 				'w' => 'medium',
 				'value' => '',
 			),
 			'email' => array(
 				'type' => 'text',
 				'left' => 'user_email',
-				'button' => 'user_email_input',
+				'tip' => 'user_email_input',
 				'w' => 'medium',
 				'value' => '',
 			),
 			'gender' => array(
 				'type' => 'radio',
 				'left' => 'user_gender',
-				'button' => 'user_gender_select',
+				'tip' => 'user_gender_select',
 				'size' => '',
 				'value' => '',
 				'list' => array(
@@ -338,17 +366,36 @@ class UserController extends BaseController
 					'2' => array('name' => 'unknown', 'disabled' => ''),
 				),
 			),
+			'age' => array(
+				'type' => 'text',
+				'left' => 'user_age',
+				'tip' => 'user_age_input',
+				'w' => 'small',
+				'value' => '',
+				'check' => array(
+					'regular' => array(
+						'compare' => get_js_regular('age'),
+						'alert' => 'user_age_input',
+					),
+				),
+			),
 			'invite_uid' => array(
 				'type' => 'text',
 				'left' => 'user_invite_uid',
-				'button' => 'user_invite_uid_input',
+				'tip' => 'user_invite_uid_input',
 				'w' => 'medium',
 				'value' => '',
+				'check' => array(
+					'regular' => array(
+						'compare' => get_js_regular('num'),
+						'alert' => 'user_invite_uid_input',
+					),
+				),
 			),
 			'profile' => array(
 				'type' => 'textarea',
 				'left' => 'user_profile',
-				'button' => 'user_profile_input',
+				'tip' => 'user_profile_input',
 				'cols' => '',
 				'rows' => '2',
 				'w' => '',
